@@ -1,5 +1,7 @@
 :host {
-    flex-grow: 1!important;
+    flex-grow: 1 !important;
+    overflow-y: auto;
+    max-height: 100%;
 }
 
 .max-width {

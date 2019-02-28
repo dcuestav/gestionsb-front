@@ -1,7 +1,7 @@
 import { IProduct } from 'src/app/model/interfaces/product.interface';
-import { Product } from './../../model/product';
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import * as _ from 'lodash';
+
 
 @Component({
   selector: 'app-stock-table',
@@ -10,24 +10,55 @@ import * as _ from 'lodash';
 })
 export class StockTableComponent implements OnInit {
 
-  displayedColumns: string[] = ['name', 'reference', 'color', 'size', 'price', 'currentStock'];
+  private isMobile = window.innerWidth < 600;
+  public displayedColumns: string[] = ['reference', 'name', 'color', 'size', 'price', 'currentStock'];
 
-  private models: string[];
-  private prods: IProduct[];
+  private allProducts: IProduct[];
+  public models: string[];
+  public filteredProducts: IProduct[];
+  public filterModel: string;
+
+  @Output()
+  public toggleCategoriesMenuEvent = new EventEmitter();
 
   @Input()
   set products(products: IProduct[]) {
     const productNames = products.map( product => product.name);
     this.models = _.uniq(productNames);
-    this.prods = products;
+    this.allProducts = products;
+    this.filterModel = null;
+    this.applyFilter();
   }
 
   get products() {
-    return this.prods;
+    return this.allProducts;
   }
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() {
+    if (this.isMobile) {
+      this.displayedColumns = this.displayedColumns.filter( column => column !== 'name' && column !== 'price');
+    }
+  }
+
+  public toggleFilter(model: string) {
+    this.filterModel = (this.filterModel === model) ? null : model;
+    this.applyFilter();
+  }
+
+  toggleCategoriesMenu() {
+    this.toggleCategoriesMenuEvent.emit(null);
+  }
+
+  private applyFilter() {
+    if (this.filterModel) {
+      this.filteredProducts = this.allProducts.filter( product => product.name === this.filterModel );
+    } else if (this.isMobile) {
+      this.filteredProducts = [];
+    } else {
+      this.filteredProducts = this.allProducts;
+    }
+  }
 
 }

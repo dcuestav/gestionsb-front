@@ -1,7 +1,7 @@
 <mat-sidenav-container class="h-100">
-  <mat-sidenav mode="side">
+  <mat-sidenav>
     
-    <h5>Categorías</h5>
+    <!-- <h5 class="px-3">Categorías</h5> -->
 
     <mat-list class="max-width">
       <mat-list-item *ngFor="let category of categories">
@@ -13,6 +13,6 @@
 
   <!-- Principal -->
   <mat-sidenav-content>
-      <app-stock-table [products]="products"></app-stock-table>
+    <app-stock-table [products]="products" (toggleCategoriesMenuEvent)="showHideMenu($event)"></app-stock-table>
   </mat-sidenav-content>
 </mat-sidenav-container>

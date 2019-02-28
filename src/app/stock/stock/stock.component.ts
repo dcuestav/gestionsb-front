@@ -16,10 +16,12 @@ export class StockComponent implements OnInit {
   private categories: Category[] = [];
   private selectedCategory: Category;
   private products: IProduct[] = [];
+  private isMobile = window.innerWidth < 600;
 
   constructor(private productService: ProductService) { }
 
   ngOnInit() {
+    this.matSidenav.mode = this.isMobile ? 'over' : 'side';
     this.loadCategories();
   }
 
@@ -32,6 +34,9 @@ export class StockComponent implements OnInit {
   }
 
   selectCategory(category: Category) {
+    if (this.isMobile) {
+      this.matSidenav.close();
+    }
     this.selectedCategory = category;
     this.loadProductsFromSelectedCategory();
   }
@@ -44,6 +49,10 @@ export class StockComponent implements OnInit {
     this.productService.getProductsOfCategory(this.selectedCategory).subscribe( products => {
       this.products = products;
     });
+  }
+
+  public showHideMenu() {
+    this.matSidenav.opened = !this.matSidenav.opened;
   }
 
 }
