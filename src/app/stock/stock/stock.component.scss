@@ -1,0 +1,17 @@
+:host {
+    flex-grow: 1!important;
+}
+
+.max-width {
+    max-width: 250px;
+}
+
+.mat-button {
+    width: 100%;
+    text-align: left;
+
+    &[disabled] {
+        color: #333;
+        background-color: #eeeeee;
+    }
+}

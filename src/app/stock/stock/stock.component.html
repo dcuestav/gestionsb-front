@@ -1,0 +1,18 @@
+<mat-sidenav-container class="h-100">
+  <mat-sidenav mode="side">
+    
+    <h5>Categorías</h5>
+
+    <mat-list class="max-width">
+      <mat-list-item *ngFor="let category of categories">
+        <button mat-button [disabled]="isSelectCategory(category)" (click)="selectCategory(category)">{{category.name}}</button>
+      </mat-list-item>
+    </mat-list>
+
+  </mat-sidenav>
+
+  <!-- Principal -->
+  <mat-sidenav-content>
+      <app-stock-table [products]="products"></app-stock-table>
+  </mat-sidenav-content>
+</mat-sidenav-container>
