@@ -4,6 +4,7 @@ import { QuotesComponent } from './quotes/quotes.component';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { QuotesService } from './quotes.service';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [QuotesComponent],
@@ -12,6 +13,7 @@ import { QuotesService } from './quotes.service';
     CommonModule,
     MatTableModule,
     MatButtonModule,
+    MatPaginatorModule,
   ]
 })
 export class QuotesModule { }

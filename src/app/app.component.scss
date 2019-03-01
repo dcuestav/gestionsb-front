@@ -1,8 +1,15 @@
 .mat-toolbar {
     z-index: 2;
+    flex-shrink: 0;
 }
 .mat-button .mat-icon {
     position: relative;
     top: -2px;
     margin-right: 5px;
+}
+
+.section-container {
+    flex-grow: 1 !important;
+    overflow-y: auto;
+    max-height: 100%;
 }

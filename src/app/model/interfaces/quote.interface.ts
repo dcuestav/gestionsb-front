@@ -1,3 +1,5 @@
+import { IQuoteClient } from './quote-client.interface';
+
 export interface IQuote {
 
     id: number;
@@ -7,4 +9,5 @@ export interface IQuote {
     taxes: string;
     state: string;
     total: number;
+    client: IQuoteClient;
 }

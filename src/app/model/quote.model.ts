@@ -1,4 +1,5 @@
 import { IQuote } from './interfaces/quote.interface';
+import { IQuoteClient } from './interfaces/quote-client.interface';
 
 export class Quote {
 
@@ -9,6 +10,7 @@ export class Quote {
     taxes: string;
     state: string;
     total: number;
+    client: IQuoteClient;
 
     constructor(quoteDTO: IQuote) {
         this.id = quoteDTO.id;
@@ -18,5 +20,6 @@ export class Quote {
         this.taxes = quoteDTO.taxes;
         this.state = quoteDTO.state;
         this.total = quoteDTO.total;
+        this.client = quoteDTO.client;
     }
 }
