@@ -6,3 +6,12 @@ body {
     margin: 0; 
     font-family: Roboto, "Helvetica Neue", sans-serif; 
 }
+
+table {
+    width: 100%;
+    
+    .mat-row:hover {
+        background-color: #eeeeee;
+    }
+}
+

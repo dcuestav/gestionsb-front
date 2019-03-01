@@ -1,8 +1,10 @@
+import { ResponsiveService } from 'src/app/service/responsive.service';
 import { ProductService } from './../../service/product.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Category } from 'src/app/model/category';
 import { MatSidenav } from '@angular/material/sidenav';
 import { IProduct } from 'src/app/model/interfaces/product.interface';
+import { ErrorService } from 'src/app/service/error.service';
 
 @Component({
   selector: 'app-stock',
@@ -16,12 +18,17 @@ export class StockComponent implements OnInit {
   private categories: Category[] = [];
   private selectedCategory: Category;
   private products: IProduct[] = [];
-  private isMobile = window.innerWidth < 600;
 
-  constructor(private productService: ProductService) { }
+  constructor(private productService: ProductService,
+              private responsiveService: ResponsiveService,
+              private errorService: ErrorService) { }
+
+  public isMobile() {
+    return this.responsiveService.isMobile();
+  }
 
   ngOnInit() {
-    this.matSidenav.mode = this.isMobile ? 'over' : 'side';
+    this.matSidenav.mode = this.isMobile() ? 'over' : 'side';
     this.loadCategories();
   }
 
@@ -34,7 +41,7 @@ export class StockComponent implements OnInit {
   }
 
   selectCategory(category: Category) {
-    if (this.isMobile) {
+    if (this.isMobile()) {
       this.matSidenav.close();
     }
     this.selectedCategory = category;
@@ -46,9 +53,9 @@ export class StockComponent implements OnInit {
   }
 
   private loadProductsFromSelectedCategory() {
-    this.productService.getProductsOfCategory(this.selectedCategory).subscribe( products => {
-      this.products = products;
-    });
+    this.productService.getProductsOfCategory(this.selectedCategory)
+    .subscribe( products => { this.products = products; },
+                error => this.errorService.showError(error) );
   }
 
   public showHideMenu() {

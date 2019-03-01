@@ -1,5 +1,14 @@
 <div class="h-100 d-flex flex-column">
-    <h1 class="h4 my-4 px-3">Gestión SábanasBlancas.es</h1>
+
+    <mat-toolbar color="primary" class="mat-elevation-z4">
+        <span>Gestión SábanasBlancas.es</span>
+        <button mat-button routerLink="/stock" routerLinkActive="active" class="ml-5">
+            <mat-icon>crop_portrait</mat-icon>Productos
+        </button>
+        <button mat-button routerLink="/quotes" routerLinkActive="active" class="">
+            <mat-icon>list_alt</mat-icon>Presupuestos
+        </button>
+    </mat-toolbar>
     <router-outlet></router-outlet>
 </div>
 

@@ -1,6 +1,7 @@
 import { IProduct } from 'src/app/model/interfaces/product.interface';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import * as _ from 'lodash';
+import { ResponsiveService } from 'src/app/service/responsive.service';
 
 
 @Component({
@@ -10,7 +11,6 @@ import * as _ from 'lodash';
 })
 export class StockTableComponent implements OnInit {
 
-  private isMobile = window.innerWidth < 600;
   public displayedColumns: string[] = ['reference', 'name', 'color', 'size', 'price', 'currentStock'];
 
   private allProducts: IProduct[];
@@ -34,10 +34,15 @@ export class StockTableComponent implements OnInit {
     return this.allProducts;
   }
 
-  constructor() { }
+  constructor(private responsiveService: ResponsiveService) {
+  }
+
+  public isMobile() {
+    return this.responsiveService.isMobile();
+  }
 
   ngOnInit() {
-    if (this.isMobile) {
+    if (this.isMobile()) {
       this.displayedColumns = this.displayedColumns.filter( column => column !== 'name' && column !== 'price');
     }
   }
@@ -54,7 +59,7 @@ export class StockTableComponent implements OnInit {
   private applyFilter() {
     if (this.filterModel) {
       this.filteredProducts = this.allProducts.filter( product => product.name === this.filterModel );
-    } else if (this.isMobile) {
+    } else if (this.isMobile()) {
       this.filteredProducts = [];
     } else {
       this.filteredProducts = this.allProducts;
