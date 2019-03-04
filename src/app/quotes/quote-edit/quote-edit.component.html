@@ -1,0 +1,161 @@
+<button mat-button (click)="goBack()">Volver</button>
+
+<h2 class="my-3">Presupuesto {{(quote$|async)?.id}}</h2>
+
+<form [formGroup]="quoteForm">
+  <input type="hidden" formControlName="id">
+  <input type="hidden" formControlName="date">
+  <input type="hidden" formControlName="state">
+
+  <div class="row">
+    <div class="col-md-6" formGroupName="client">
+      <mat-card class="bg-light">
+        <mat-card-title>Datos del cliente</mat-card-title>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-label>Nombre</mat-label>
+              <input matInput type="text" formControlName="name">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-label>Email</mat-label>
+              <input matInput type="text" formControlName="email">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-label>Empresa</mat-label>
+              <input matInput type="text" formControlName="company">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-label>Teléfono</mat-label>
+              <input matInput type="text" formControlName="phone">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <mat-form-field>
+                  <mat-label>Dirección</mat-label>
+                  <input matInput type="text" formControlName="address" placeholder="(Opcional)">
+                </mat-form-field>
+            </div>
+        </div>
+      </mat-card>
+    </div>
+    <div class="col-md-6">
+      <mat-card class="bg-light">
+        <mat-card-title>Condiciones</mat-card-title>
+        <div class="row">
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-label>IVA</mat-label>
+              <input matInput type="text" formControlName="taxes">
+            </mat-form-field>
+          </div>
+          <div class="col-md-6">
+            <mat-form-field>
+              <mat-label>Tiempo de entrega</mat-label>
+              <input matInput type="text" formControlName="deliveryTime">
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12">
+            <mat-form-field>
+              <mat-label>Notas</mat-label>
+              <input matInput type="text" formControlName="comments" placeholder="Información adicional...">
+            </mat-form-field>
+          </div>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+
+  <fieldset class="budget-lines mt-3">
+
+  <mat-card-title>Detalle del presupuesto</mat-card-title>
+
+  <div formArrayName="lines">
+
+    <div class="row">
+      <div class="col-sm-3">
+        <mat-label class="h6">Artículo</mat-label>
+      </div>
+      <div class="col-sm-2">
+        <mat-label class="h6">Color</mat-label>
+      </div>
+      <div class="col-sm-2">
+        <mat-label class="h6">Talla</mat-label>
+      </div>
+      <div class="col-sm-2">
+        <mat-label class="h6">Notas</mat-label>
+      </div>
+      <div class="col-sm-1">
+        <mat-label class="h6">Cantidad</mat-label>
+      </div>
+      <div class="col-sm-1">
+        <mat-label class="h6">Precio</mat-label>
+      </div>
+      <div class="col-sm-1">
+        <mat-label class="h6">Total</mat-label>
+      </div>
+    </div>
+
+    <span *ngFor="let line of lines.controls; let i=index">
+
+      <div [formGroupName]="i" class="row">
+
+        <input type="hidden" formControlName="lineNumber">
+
+        <div class="col-sm-3">
+          <mat-form-field>
+            <input matInput type="text" formControlName="productName">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-2">
+          <mat-form-field>
+            <input matInput type="text" formControlName="productColor">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-2">
+          <mat-form-field>
+            <input matInput type="text" formControlName="productSize">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-2">
+          <mat-form-field>
+            <input matInput type="text" formControlName="productComments">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-1">
+          <mat-form-field>
+            <input matInput type="text" formControlName="quantity" class="text-right">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-1">
+          <mat-form-field>
+            <input matInput type="text" formControlName="productPrice" class="text-right">
+          </mat-form-field>
+        </div>
+        <div class="col-sm-1">
+          <mat-form-field>
+            <input matInput type="text" value="0" class="text-right">
+          </mat-form-field>
+        </div>
+
+      </div>
+
+    </span>
+  </div>
+
+</fieldset>
+  
+</form>
+

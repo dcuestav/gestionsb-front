@@ -1,0 +1,21 @@
+:host {
+    display: block;
+    padding: 1rem 15px;
+    width: 100%;
+    height: 100%;
+    max-width: 1300px;
+    margin: auto;
+}
+
+.mat-card {
+    // background-color: cornsilk;
+}
+
+.mat-form-field {
+    font-size: 90%;
+    width: 100%;
+}
+
+.budget-lines .mat-form-field-wrapper {
+    padding-bottom: 0.75em;
+}

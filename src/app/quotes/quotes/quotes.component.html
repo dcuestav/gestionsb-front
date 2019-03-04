@@ -1,6 +1,7 @@
 <div class="h-100 p-md-3 p-1">
 
-  <mat-paginator [length]="totalElements" [pageSize]="pageSize" [pageSizeOptions]="[10, 20, 50, 100]" (page)="loadPage($event)">
+  <mat-paginator [length]="totalElements" [pageSize]="pageSize" 
+    [pageSizeOptions]="[10, 20, 50, 100]" (page)="loadPage($event)">
   </mat-paginator>
 
   <table *ngIf="quotes" mat-table [dataSource]="quotes" class="mat-elevation-z8 mt-3 mb-4">
@@ -31,7 +32,7 @@
     </ng-container>
   
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="goToQuoteDetail(row)"></tr>
 
   </table>
 

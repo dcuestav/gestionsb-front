@@ -1,8 +1,8 @@
 import { Quote } from './../../model/quote.model';
 import { QuotesService } from './../quotes.service';
 import { Component, OnInit } from '@angular/core';
-import { ErrorService } from 'src/app/service/error.service';
 import { PageEvent } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-quotes',
@@ -20,7 +20,8 @@ export class QuotesComponent implements OnInit {
   public totalElements: number;
 
   constructor(private service: QuotesService,
-              private errorService: ErrorService) { }
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.getQuotes(this.pageNumber, this.pageSize);
@@ -33,12 +34,17 @@ export class QuotesComponent implements OnInit {
   private getQuotes(page: number, size: number) {
 
     this.service.getQuotes(page, size)
-      .subscribe( page => {
-        this.quotes = page.elements.map( quoteDTO => new Quote(quoteDTO));
-        this.pageSize = page.size;
-        this.pageNumber = page.page;
-        this.totalElements = page.totalElements;
-      }, error => this.errorService.showError(error) );
+      .subscribe( pageResults => {
+        this.quotes = pageResults.elements.map( quoteDTO => new Quote(quoteDTO));
+        this.pageSize = pageResults.size;
+        this.pageNumber = pageResults.page;
+        this.totalElements = pageResults.totalElements;
+
+      }, this.service.handleError );
+  }
+
+  public goToQuoteDetail(quote: Quote) {
+    this.router.navigate([quote.id], {relativeTo: this.route});
   }
 
 }

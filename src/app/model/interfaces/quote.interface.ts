@@ -1,7 +1,7 @@
 import { IQuoteClient } from './quote-client.interface';
+import { IQuoteLine } from './quote-line.interface';
 
 export interface IQuote {
-
     id: number;
     date: string;
     comments: string;
@@ -10,4 +10,5 @@ export interface IQuote {
     state: string;
     total: number;
     client: IQuoteClient;
+    lines: IQuoteLine[];
 }
