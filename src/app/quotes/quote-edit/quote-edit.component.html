@@ -1,6 +1,9 @@
-<button mat-button (click)="goBack()">Volver</button>
-
-<h2 class="my-3">Presupuesto {{(quote$|async)?.id}}</h2>
+<div class="d-inline-block">
+  <button mat-button (click)="goBack()" class="inline-back-button mr-3">Volver</button>
+</div>
+<div class="d-inline-block">
+  <h2 class="my-3">Presupuesto {{(quote$|async)?.id}}</h2>
+</div>
 
 <form [formGroup]="quoteForm">
   <input type="hidden" formControlName="id">
@@ -50,7 +53,7 @@
       </mat-card>
     </div>
     <div class="col-md-6">
-      <mat-card class="bg-light">
+      <mat-card class="bg-light h-100">
         <mat-card-title>Condiciones</mat-card-title>
         <div class="row">
           <div class="col-md-6">
@@ -78,84 +81,54 @@
     </div>
   </div>
 
-  <fieldset class="budget-lines mt-3">
+  <mat-card class="budget-lines my-4">
 
-  <mat-card-title>Detalle del presupuesto</mat-card-title>
+    <div class="table-container">
 
-  <div formArrayName="lines">
+      <!-- Títulos -->
+      <div class="row bg-light py-3">
+        <div class="col-3">
+          <mat-label class="h6">Artículo</mat-label>
+        </div>
+        <div class="col-2">
+          <mat-label class="h6">Color</mat-label>
+        </div>
+        <div class="col-2">
+          <mat-label class="h6">Talla</mat-label>
+        </div>
+        <div class="col-2">
+          <mat-label class="h6">Notas</mat-label>
+        </div>
+        <div class="col-1">
+          <mat-label class="h6">Cantidad</mat-label>
+        </div>
+        <div class="col-1">
+          <mat-label class="h6">Precio</mat-label>
+        </div>
+        <div class="col-1">
+          <mat-label class="h6">Total</mat-label>
+        </div>
+      </div>
 
-    <div class="row">
-      <div class="col-sm-3">
-        <mat-label class="h6">Artículo</mat-label>
+      <span *ngFor="let line of lines">
+
+        <app-quote-edit-line [(quoteLine)]="line" [sortedProducts]="products"></app-quote-edit-line>
+        <!-- <p style="font-size:70%;">{{line|json}}</p> -->
+
+      </span>
+
+      <div class="row pt-3">
+        <div class="offset-10 col-2">
+          <mat-form-field>
+            <input matInput type="text" value="{{getTotal()|number:'1.2-2'}}" class="text-right font-100 font-weight-bold" readonly="readonly">
+          </mat-form-field>
+        </div>
       </div>
-      <div class="col-sm-2">
-        <mat-label class="h6">Color</mat-label>
-      </div>
-      <div class="col-sm-2">
-        <mat-label class="h6">Talla</mat-label>
-      </div>
-      <div class="col-sm-2">
-        <mat-label class="h6">Notas</mat-label>
-      </div>
-      <div class="col-sm-1">
-        <mat-label class="h6">Cantidad</mat-label>
-      </div>
-      <div class="col-sm-1">
-        <mat-label class="h6">Precio</mat-label>
-      </div>
-      <div class="col-sm-1">
-        <mat-label class="h6">Total</mat-label>
-      </div>
+
     </div>
 
-    <span *ngFor="let line of lines.controls; let i=index">
-
-      <div [formGroupName]="i" class="row">
-
-        <input type="hidden" formControlName="lineNumber">
-
-        <div class="col-sm-3">
-          <mat-form-field>
-            <input matInput type="text" formControlName="productName">
-          </mat-form-field>
-        </div>
-        <div class="col-sm-2">
-          <mat-form-field>
-            <input matInput type="text" formControlName="productColor">
-          </mat-form-field>
-        </div>
-        <div class="col-sm-2">
-          <mat-form-field>
-            <input matInput type="text" formControlName="productSize">
-          </mat-form-field>
-        </div>
-        <div class="col-sm-2">
-          <mat-form-field>
-            <input matInput type="text" formControlName="productComments">
-          </mat-form-field>
-        </div>
-        <div class="col-sm-1">
-          <mat-form-field>
-            <input matInput type="text" formControlName="quantity" class="text-right">
-          </mat-form-field>
-        </div>
-        <div class="col-sm-1">
-          <mat-form-field>
-            <input matInput type="text" formControlName="productPrice" class="text-right">
-          </mat-form-field>
-        </div>
-        <div class="col-sm-1">
-          <mat-form-field>
-            <input matInput type="text" value="0" class="text-right">
-          </mat-form-field>
-        </div>
-
-      </div>
-
-    </span>
-  </div>
-
-</fieldset>
+  </mat-card>
   
 </form>
+
 

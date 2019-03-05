@@ -11,6 +11,21 @@ table {
     width: 100%;
     
     .mat-row:hover {
+        cursor: pointer;
         background-color: #eeeeee;
     }
+}
+
+.mat-option {
+    height: 30px !important;
+}
+.mat-option-text {
+    font-size: .8rem !important;
+}
+
+.font-080 {
+    font-size: .8rem !important;
+}
+.font-100 {
+    font-size: 1rem !important;
 }

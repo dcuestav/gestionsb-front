@@ -6,12 +6,15 @@ import { Observable } from 'rxjs';
 import { Quote } from '../model/quote.model';
 import { map } from 'rxjs/operators';
 import { ErrorService } from '../service/error.service';
+import { ProductService } from '../service/product.service';
+import { IProduct } from '../model/interfaces/product.interface';
 
 @Injectable()
 export class QuotesService {
 
   constructor(private http: HttpClient,
-              private errorService: ErrorService) { }
+              private errorService: ErrorService,
+              private productService: ProductService) { }
 
   public getQuotes(page: number, size: number) {
 
@@ -31,5 +34,9 @@ export class QuotesService {
 
   public handleError(error: HttpErrorResponse) {
     this.errorService.showError(error);
+  }
+
+  public getAllProducts(): Observable<IProduct[]> {
+    return this.productService.getAllProducts();
   }
 }

@@ -10,9 +10,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material';
 import { MatCardModule } from '@angular/material/card';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { QuoteEditLineComponent } from './quote-edit-line/quote-edit-line.component';
 
 @NgModule({
-  declarations: [QuotesComponent, QuoteEditComponent],
+  declarations: [QuotesComponent, QuoteEditComponent, QuoteEditLineComponent],
   providers: [QuotesService],
   imports: [
     CommonModule,
@@ -23,6 +25,7 @@ import { MatCardModule } from '@angular/material/card';
     MatFormFieldModule,
     MatInputModule,
     MatCardModule,
+    MatAutocompleteModule,
   ]
 })
 export class QuotesModule { }

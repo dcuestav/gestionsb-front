@@ -7,15 +7,24 @@
     margin: auto;
 }
 
-.mat-card {
-    // background-color: cornsilk;
-}
+.inline-back-button {
+    position: relative;
+    top: -6px;
+}    
 
 .mat-form-field {
     font-size: 90%;
     width: 100%;
 }
 
-.budget-lines .mat-form-field-wrapper {
-    padding-bottom: 0.75em;
+.budget-lines {
+    padding-top: 0;
+    overflow-x: auto;
+
+    .mat-form-field-wrapper {
+        padding-bottom: 0.75em;
+    }
+    .table-container {
+        min-width: 800px;
+    }
 }

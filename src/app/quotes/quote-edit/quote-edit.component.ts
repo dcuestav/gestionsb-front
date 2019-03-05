@@ -4,8 +4,10 @@ import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Quote } from './../../model/quote.model';
 import { Observable } from 'rxjs';
-import { FormControl, FormGroup, FormArray } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { IQuoteLine } from 'src/app/model/interfaces/quote-line.interface';
+import * as _ from 'lodash';
+import { QuoteLine } from 'src/app/model/quote-line';
 
 @Component({
   selector: 'app-quote-edit',
@@ -16,8 +18,10 @@ export class QuoteEditComponent implements OnInit {
 
   public quote$: Observable<Quote>;
   public ready = false;
+  private products = [];
+  public productNames = [];
 
-  lines = new FormArray([]);
+  lines: QuoteLine[];
 
   quoteForm = new FormGroup({
     id: new FormControl(),
@@ -33,8 +37,7 @@ export class QuoteEditComponent implements OnInit {
       company: new FormControl(),
       email: new FormControl(),
       phone: new FormControl()
-    }),
-    lines: this.lines
+    })
   });
 
   constructor(private route: ActivatedRoute,
@@ -54,6 +57,11 @@ export class QuoteEditComponent implements OnInit {
       }
     });
 
+    this.service.getAllProducts().subscribe( products => {
+      const sortedProducts = _.sortBy(products, ['name', 'color', 'reference']);
+      this.products = sortedProducts;
+    });
+
   }
 
   public goBack() {
@@ -61,25 +69,17 @@ export class QuoteEditComponent implements OnInit {
   }
 
   private setFormValues(quote: Quote) {
-    for (let line of quote.lines) {
-      const lineFormGroup = this.buildFormLineToForm(line);
-      this.lines.push(lineFormGroup);
-    }
+    this.lines = quote.lines;
+    delete quote.lines;
     this.quoteForm.setValue(quote);
     this.ready = true;
   }
 
-  private buildFormLineToForm(line: IQuoteLine) {
-    return new FormGroup({
-      lineNumber: new FormControl(line.lineNumber),
-      productReference: new FormControl(line.productReference),
-      productName: new FormControl(line.productName),
-      productColor: new FormControl(line.productColor),
-      productSize: new FormControl(line.productSize),
-      productComments: new FormControl(line.productComments),
-      productPrice: new FormControl(line.productPrice),
-      quantity: new FormControl(line.quantity)
-    });
+  public getTotal() {
+    if (!this.lines) {
+      return 0;
+    }
+    return this.lines.reduce( (previous, current) => previous + current.total, 0);
   }
 
 }

@@ -32,9 +32,16 @@ export class ProductService {
     return categories;
   }
 
+  getAllProducts(): Observable<IProduct[]> {
+
+    const url = `http://localhost:8080/products`;
+
+    return this.http.get<IProduct[]>(url);
+  }
+
   getProductsOfCategory(selectedCategory: Category): Observable<IProduct[]> {
 
-    const url = `http://localhost:8080/product/?categoryId=${selectedCategory.id}`;
+    const url = `http://localhost:8080/products/${selectedCategory.id}`;
 
     return this.http.get<IProduct[]>(url);
   }

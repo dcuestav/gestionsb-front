@@ -1,6 +1,8 @@
+import { QuoteLine } from './quote-line';
 import { IQuote } from './interfaces/quote.interface';
 import { IQuoteClient } from './interfaces/quote-client.interface';
-import { IQuoteLine } from './interfaces/quote-line.interface';
+import { Taxes } from './enums/taxes';
+import { QuoteState } from './enums/quote-state';
 
 export class Quote {
 
@@ -8,21 +10,21 @@ export class Quote {
     date: Date;
     comments: string;
     deliveryTime: string;
-    taxes: string;
-    state: string;
+    taxes: Taxes;
+    state: QuoteState;
     total: number;
     client: IQuoteClient;
-    lines: IQuoteLine[];
+    lines: QuoteLine[];
 
     constructor(quoteDTO: IQuote) {
         this.id = quoteDTO.id;
         this.date = new Date(quoteDTO.date);
         this.comments = quoteDTO.comments;
         this.deliveryTime = quoteDTO.deliveryTime;
-        this.taxes = quoteDTO.taxes;
-        this.state = quoteDTO.state;
+        this.taxes = Taxes[quoteDTO.taxes];
+        this.state = QuoteState[quoteDTO.state];
         this.total = quoteDTO.total;
         this.client = quoteDTO.client;
-        this.lines = quoteDTO.lines;
+        this.lines = quoteDTO.lines ? quoteDTO.lines.map( lineDTO => new QuoteLine(lineDTO)) : [];
     }
 }

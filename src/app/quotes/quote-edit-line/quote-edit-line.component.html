@@ -1,0 +1,56 @@
+<div [formGroup]="form" class="row" style="margin-bottom: -10px;">
+
+  <input type="hidden" formControlName="lineNumber">
+
+  <div class="col-3 pr-0">
+    <mat-form-field>
+      <input matInput type="text" formControlName="productName" [matAutocomplete]="autoName">
+    </mat-form-field>
+    <mat-autocomplete #autoName="matAutocomplete">
+      <mat-option *ngFor="let productName of filteredProductNames" [value]="productName">
+        {{ productName }}
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+  <div class="col-2 pr-0">
+    <mat-form-field>
+      <input matInput type="text" formControlName="productColor" [matAutocomplete]="autoColor">
+    </mat-form-field>
+    <mat-autocomplete #autoColor="matAutocomplete">
+      <mat-option *ngFor="let color of availableColors" [value]="color">
+        {{ color }}
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+  <div class="col-2 pr-0">
+    <mat-form-field>
+      <input matInput type="text" formControlName="productSize" [matAutocomplete]="autoSize">
+    </mat-form-field>
+    <mat-autocomplete #autoSize="matAutocomplete">
+      <mat-option *ngFor="let size of availableSizes" [value]="size">
+        {{ size }}
+      </mat-option>
+    </mat-autocomplete>
+  </div>
+  <div class="col-2 pr-0">
+    <mat-form-field>
+      <input matInput type="text" formControlName="productComments">
+    </mat-form-field>
+  </div>
+  <div class="col-1 pr-0">
+    <mat-form-field>
+      <input matInput type="number" formControlName="quantity" class="text-right">
+    </mat-form-field>
+  </div>
+  <div class="col-1 pr-0">
+    <mat-form-field>
+      <input matInput type="number" step="0.01" formControlName="productPrice" class="text-right">
+    </mat-form-field>
+  </div>
+  <div class="col-1">
+    <mat-form-field>
+      <input matInput type="text" value="{{quoteLine.total|number:'1.2-2'}}" class="text-right" readonly="readonly">
+    </mat-form-field>
+  </div>
+
+</div>
