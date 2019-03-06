@@ -1,6 +1,6 @@
 export enum QuoteState {
-    EDITABLE = 'Editando',
-    ACCEPTED = 'Aceptado',
-    REJECTED = 'Rechazado',
-    SENT = 'Enviado'
+    EDITABLE = 'EDITABLE',
+    ACCEPTED = 'ACCEPTED',
+    REJECTED = 'REJECTED',
+    SENT = 'SENT'
 }

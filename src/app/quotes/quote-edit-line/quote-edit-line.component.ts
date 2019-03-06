@@ -13,6 +13,7 @@ export class QuoteEditLineComponent implements OnInit {
 
   @Input()
   quoteLine: QuoteLine;
+
   @Output()
   quoteLineChange = new EventEmitter<QuoteLine>();
 
@@ -35,6 +36,7 @@ export class QuoteEditLineComponent implements OnInit {
   public availableSizes = [];
 
   form = new FormGroup({
+    id: new FormControl(null),
     lineNumber: new FormControl(0),
     productReference: new FormControl(''),
     productName: new FormControl(''),
@@ -54,12 +56,12 @@ export class QuoteEditLineComponent implements OnInit {
     this.form.get('productName').valueChanges.subscribe( name => {
 
       const standarizedName = this.standarize(name);
-      this.filteredProductNames = this.productNames.filter( productName => this.standarize(productName) === standarizedName );
+      this.filteredProductNames = this.productNames.filter( productName => this.standarize(productName).indexOf(standarizedName) >= 0 );
       if (this.filteredProductNames.length === 0) {
         this.filteredProductNames = this.productNames;
       }
 
-      if (this.productNames.indexOf(name)) {
+      if (this.productNames.indexOf(name) >= 0) {
         this.updateOptionsFromProductName(name, true);
 
       } else {

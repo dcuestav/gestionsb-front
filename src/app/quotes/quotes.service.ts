@@ -1,3 +1,4 @@
+import { QuoteState } from './../model/enums/quote-state';
 import { Injectable } from '@angular/core';
 import { IQuote } from '../model/interfaces/quote.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -39,4 +40,23 @@ export class QuotesService {
   public getAllProducts(): Observable<IProduct[]> {
     return this.productService.getAllProducts();
   }
+
+  public updateQuoteState(quoteId: number, newStateKey: string) {
+
+    const url = `http://localhost:8080/quote/${quoteId}/state`;
+
+    return this.http.put<any>(url, newStateKey);
+  }
+
+  public saveQuote(quote: Quote) {
+
+    const url = `http://localhost:8080/quote`;
+
+    if (quote.id) {
+      return this.http.put<any>(url, quote);
+    } else {
+      return this.http.post<any>(url, quote);
+    }
+  }
+
 }

@@ -1,8 +1,11 @@
-<div class="d-inline-block">
-  <button mat-button (click)="goBack()" class="inline-back-button mr-3">Volver</button>
-</div>
-<div class="d-inline-block">
-  <h2 class="my-3">Presupuesto {{(quote$|async)?.id}}</h2>
+<div class="row">
+  <div class="col-md-10">
+    <h2 class="">Presupuesto {{(quote$|async)?.id}}</h2>
+  </div>
+  <div class="col-md-2 text-right">
+    <button mat-stroked-button (click)="goBack()" class="mr-3">Volver</button>
+    <button mat-flat-button color="accent" (click)="save()" class="">Guardar</button>
+  </div>
 </div>
 
 <form [formGroup]="quoteForm">
@@ -12,6 +15,7 @@
 
   <div class="row">
     <div class="col-md-6" formGroupName="client">
+      <input type="hidden" formControlName="id">
       <mat-card class="bg-light">
         <mat-card-title>Datos del cliente</mat-card-title>
         <div class="row">
@@ -110,18 +114,31 @@
         </div>
       </div>
 
-      <span *ngFor="let line of lines">
+      <div *ngFor="let line of lines; index as i" class="d-flex flex-row-reverse position-relative">
 
-        <app-quote-edit-line [(quoteLine)]="line" [sortedProducts]="products"></app-quote-edit-line>
-        <!-- <p style="font-size:70%;">{{line|json}}</p> -->
+        <div class="position-absolute" style="top:6px;">
+          <button mat-icon-button (click)="removeLine(i)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
 
-      </span>
+        <div class="flex-grow-1 mr-5">
+          <app-quote-edit-line [(quoteLine)]="line" [sortedProducts]="products"></app-quote-edit-line>
+        </div>
+        
+      </div>
 
-      <div class="row pt-3">
-        <div class="offset-10 col-2">
-          <mat-form-field>
-            <input matInput type="text" value="{{getTotal()|number:'1.2-2'}}" class="text-right font-100 font-weight-bold" readonly="readonly">
-          </mat-form-field>
+      <div class="pt-3 pr-5">
+        
+        <div class="row">
+          <div class="col-10">
+            <button mat-flat-button color="primary" (click)="addLine()">Añadir línea</button>
+          </div>
+          <div class="col-2">
+            <mat-form-field>
+              <input matInput type="text" value="{{getTotal()|number:'1.2-2'}} €" class="text-right font-100 font-weight-bold" readonly="readonly">
+            </mat-form-field>
+          </div>
         </div>
       </div>
 

@@ -5,7 +5,6 @@ import { switchMap } from 'rxjs/operators';
 import { Quote } from './../../model/quote.model';
 import { Observable } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
-import { IQuoteLine } from 'src/app/model/interfaces/quote-line.interface';
 import * as _ from 'lodash';
 import { QuoteLine } from 'src/app/model/quote-line';
 
@@ -32,6 +31,7 @@ export class QuoteEditComponent implements OnInit {
     taxes: new FormControl(),
     state: new FormControl(),
     client: new FormGroup({
+      id: new FormControl(),
       name: new FormControl(),
       address: new FormControl(),
       company: new FormControl(),
@@ -69,7 +69,8 @@ export class QuoteEditComponent implements OnInit {
   }
 
   private setFormValues(quote: Quote) {
-    this.lines = quote.lines;
+    this.lines = _.sortBy(quote.lines, ['lineNumber']);
+    this.renumberLines();
     delete quote.lines;
     this.quoteForm.setValue(quote);
     this.ready = true;
@@ -80,6 +81,32 @@ export class QuoteEditComponent implements OnInit {
       return 0;
     }
     return this.lines.reduce( (previous, current) => previous + current.total, 0);
+  }
+
+  private renumberLines() {
+    this.lines.forEach( (line, index) => {
+      line.lineNumber = index;
+    });
+  }
+
+  public addLine() {
+    const maxLineNumber = this.lines.reduce( (previous, current) => previous > current.lineNumber ? previous : current.lineNumber, 1);
+    this.lines.push(new QuoteLine({lineNumber: maxLineNumber + 1}));
+  }
+
+  public removeLine(index: number) {
+    setTimeout( () => {
+      this.lines.splice(index, 1);
+      this.renumberLines();
+    }, 150);
+  }
+
+  public save() {
+    const quoteToSave = this.quoteForm.value;
+    quoteToSave.lines = this.lines;
+    this.service.saveQuote(quoteToSave).subscribe( () => {
+      this.goBack();
+    }, this.service.handleError );
   }
 
 }

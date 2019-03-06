@@ -27,4 +27,9 @@ export class Quote {
         this.client = quoteDTO.client;
         this.lines = quoteDTO.lines ? quoteDTO.lines.map( lineDTO => new QuoteLine(lineDTO)) : [];
     }
+
+    public getRowClass() {
+        const stateValue = Object.keys(QuoteState).find( key => QuoteState[key] === this.state );
+        return stateValue ? `row-${stateValue.toLowerCase()}` : '';
+    }
 }

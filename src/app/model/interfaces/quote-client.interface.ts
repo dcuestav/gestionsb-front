@@ -1,4 +1,5 @@
 export interface IQuoteClient {
+    id: number;
     name: string;
     address: string;
     company: string;

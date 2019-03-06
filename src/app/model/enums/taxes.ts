@@ -1,4 +1,4 @@
 export enum Taxes {
-    CON_IVA = 'IVA incluido',
-    SIN_IVA = 'IVA no incluido'
+    CON_IVA = 'CON_IVA',
+    SIN_IVA = 'SIN_IVA'
 }
