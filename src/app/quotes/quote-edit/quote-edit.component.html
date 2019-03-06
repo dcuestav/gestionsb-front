@@ -1,8 +1,8 @@
 <div class="row">
-  <div class="col-md-10">
+  <div class="col-sm-6">
     <h2 class="">Presupuesto {{(quote$|async)?.id}}</h2>
   </div>
-  <div class="col-md-2 text-right">
+  <div class="col-sm-6 text-right">
     <button mat-stroked-button (click)="goBack()" class="mr-3">Volver</button>
     <button mat-flat-button color="accent" (click)="save()" class="">Guardar</button>
   </div>
@@ -63,7 +63,11 @@
           <div class="col-md-6">
             <mat-form-field>
               <mat-label>IVA</mat-label>
-              <input matInput type="text" formControlName="taxes">
+              <mat-select formControlName="taxes">
+                <mat-option *ngFor="let key of getTaxesKeys()" [value]="key">
+                  {{getTaxesLabel(key)}}
+                </mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <div class="col-md-6">

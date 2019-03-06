@@ -1,6 +1,5 @@
 import { Category } from './../model/category';
 import { Injectable } from '@angular/core';
-import { Product } from '../model/product';
 import { HttpClient } from '@angular/common/http';
 import { IProduct } from '../model/interfaces/product.interface';
 import { Observable } from 'rxjs';

@@ -18,7 +18,7 @@ export class ErrorService {
       this.snackBar.open('Error desconocido');
     }
 
-    if (error.error && error.error) {
+    if (error.error) {
       console.error(error.error);
     }
   }

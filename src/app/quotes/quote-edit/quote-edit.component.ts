@@ -1,3 +1,4 @@
+import { Taxes, TaxesLabels } from './../../model/enums/taxes';
 import { Component, OnInit } from '@angular/core';
 import { QuotesService } from '../quotes.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
@@ -107,6 +108,14 @@ export class QuoteEditComponent implements OnInit {
     this.service.saveQuote(quoteToSave).subscribe( () => {
       this.goBack();
     }, this.service.handleError );
+  }
+
+  public getTaxesKeys() {
+    return Object.keys(Taxes);
+  }
+
+  public getTaxesLabel(key: string) {
+    return TaxesLabels[key];
   }
 
 }

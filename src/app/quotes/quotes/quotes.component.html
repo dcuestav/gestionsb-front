@@ -31,8 +31,8 @@
       <td mat-cell *matCellDef="let quote" class="text-right">
         <mat-form-field>
           <mat-select [ngModel]="quote.state" (selectionChange)="quoteStateChange(quote, $event.value)">
-            <mat-option *ngFor="let key of getQuoteStateKeys()" [value]="getQuoteStateValue(key)">
-              {{getQuoteStateValue(key)}}
+            <mat-option *ngFor="let key of getQuoteStateKeys()" [value]="key">
+              {{getQuoteStateLabel(key)}}
             </mat-option>
           </mat-select>
         </mat-form-field>

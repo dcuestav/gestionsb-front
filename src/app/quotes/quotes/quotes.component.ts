@@ -1,4 +1,4 @@
-import { QuoteState } from './../../model/enums/quote-state';
+import { QuoteState, QuoteStateLabels } from './../../model/enums/quote-state';
 import { Quote } from './../../model/quote.model';
 import { QuotesService } from './../quotes.service';
 import { Component, OnInit } from '@angular/core';
@@ -52,23 +52,14 @@ export class QuotesComponent implements OnInit {
     return Object.keys(QuoteState);
   }
 
-  public getQuoteStateValue(key: string): string {
-    return QuoteState[key].toString();
-  }
-
-  public getQuoteState(key: string): QuoteState {
-    return QuoteState[key];
+  public getQuoteStateLabel(key: string): string {
+    return QuoteStateLabels[QuoteState[key]];
   }
 
   public quoteStateChange(quote: Quote, newStateValue: string) {
-    const newStateKey = this.getQuoteStateKey(newStateValue);
-    this.service.updateQuoteState(quote.id, newStateKey).subscribe( () => {
-      quote.state = QuoteState[newStateKey];
+    this.service.updateQuoteState(quote.id, newStateValue).subscribe( () => {
+      quote.state = QuoteState[newStateValue];
     }, this.service.handleError );
-  }
-
-  private getQuoteStateKey(stateValue: string) {
-    return Object.keys(QuoteState).find( key => QuoteState[key].toString() === stateValue );
   }
 
 }

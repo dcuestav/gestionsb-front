@@ -4,3 +4,10 @@ export enum QuoteState {
     REJECTED = 'REJECTED',
     SENT = 'SENT'
 }
+
+export enum QuoteStateLabels {
+    EDITABLE = 'Abierto',
+    ACCEPTED = 'Aceptado',
+    REJECTED = 'Rechazado',
+    SENT = 'Enviado'
+}

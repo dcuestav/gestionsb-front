@@ -13,5 +13,5 @@ export class ResponsiveService {
   public isMobile() {
     return this.windowWidth <= this.mobileWidth;
   }
-  
+
 }
