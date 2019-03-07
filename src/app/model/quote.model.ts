@@ -27,6 +27,7 @@ export class Quote {
         this.client = quoteDTO.client ? new QuoteClient(quoteDTO.client) : new QuoteClient({});
         if (quoteDTO.lines && quoteDTO.lines.length) {
             this.lines = quoteDTO.lines.map( lineDTO => new QuoteLine(lineDTO));
+            this.recalculateTotal();
         } else  {
             this.lines = [];
             this.lines.push(new QuoteLine({}));
@@ -40,5 +41,23 @@ export class Quote {
 
     public isEditable() {
         return this.state === QuoteState.EDITABLE;
+    }
+
+    public recalculateTotal() {
+        this.total = this.lines.reduce( (previous, current) => previous + current.total, 0 );
+    }
+
+    public getTotalWithoutTaxes() {
+        const value = (this.taxes === Taxes.SIN_IVA) ? this.total : this.total / 1.21;
+        return Math.round(value * 100) / 100;
+    }
+
+    public getTotalWithTaxes() {
+        const value = (this.taxes === Taxes.CON_IVA) ? this.total : this.total * 1.21;
+        return Math.round(value * 100) / 100;
+    }
+
+    public getTotalTaxes() {
+        return this.getTotalWithTaxes() - this.getTotalWithoutTaxes();
     }
 }

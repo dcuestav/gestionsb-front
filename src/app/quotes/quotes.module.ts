@@ -14,9 +14,10 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { QuoteEditLineComponent } from './quote-edit-line/quote-edit-line.component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSelectModule } from '@angular/material/select';
+import { QuotePrintComponent } from './quote-print/quote-print.component';
 
 @NgModule({
-  declarations: [QuotesComponent, QuoteEditComponent, QuoteEditLineComponent],
+  declarations: [QuotesComponent, QuoteEditComponent, QuoteEditLineComponent, QuotePrintComponent],
   providers: [QuotesService],
   imports: [
     CommonModule,

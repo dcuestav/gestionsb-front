@@ -28,3 +28,16 @@ table {
 .font-100 {
     font-size: 1rem !important;
 }
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+
+    .section-container {
+        overflow-y: visible !important;
+        max-height: unset !important;
+    }
+}

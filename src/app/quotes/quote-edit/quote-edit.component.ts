@@ -130,4 +130,8 @@ export class QuoteEditComponent implements OnInit {
     return TaxesLabels[key];
   }
 
+  public getSelectedTaxesLabel() {
+    return TaxesLabels[this.quoteForm.get('taxes').value];
+  }
+
 }

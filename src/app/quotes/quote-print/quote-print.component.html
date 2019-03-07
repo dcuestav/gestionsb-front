@@ -1,0 +1,116 @@
+
+
+<div class="container">
+  <div class="no-print my-4">
+    <button mat-stroked-button (click)="goBack()">
+      Volver
+    </button>
+  </div>
+  <div class="row">
+      <div class="col-12">
+          <img src="/assets/img/logo-presupuesto.png" style="width: 14cm;"/>
+      </div>
+  </div>
+  <!-- Datos de la empresa -->
+  <div id="datos-empresa" class="row">
+      <div class="col-4 offset-8 text-right">
+          <p>
+              <br/>
+              Nidara Online, S.L.<br/>
+              NIF: B12938577<br/>
+              P.I. Acceso Sur - C/ Francia 10<br/>
+              12006 Castellón<br/>
+              info@sabanasblancas.es<br/>
+              Móvil: 601 32 83 06
+          </p>
+      </div>
+  </div>
+  <!-- Datos del presupuesto -->
+  <div id="datos-presupuesto" class="row">
+      <div class="col-3 text-right">
+          <p>
+              Presupuesto nº<br/>
+              Cliente<br/>
+              Empresa<br/>
+              Fecha
+          </p>
+      </div>
+      <div class="col-sm-9">
+          <p>
+              <strong>{{quote.id}}</strong><br/>
+              <strong>{{quote.client.name}}</strong><br/>
+              <strong>{{quote.client.company}}</strong><br/>
+              <strong>{{quote.date | date}}</strong><br/>
+          </p>
+      </div>
+  </div>
+  <!-- Contenido del presupuesto -->
+  <div id="lineas" class="row">
+      <table class="table table-bordered table-condensed">
+          <tr>
+              <th style="width: 33.333333%">Modelo</th>
+              <th style="width: 8.333333%">Color</th>
+              <th style="width: 16.666667%">Talla</th>
+              <th style="width: 16.666667%">Comentario</th>
+              <th style="width: 8.333333%">Cantidad</th>
+              <th style="width: 8.333333%">Precio ({{getTaxesLabel()}})</th>
+              <th style="width: 8.333333%">Total</th>
+          </tr>
+          <tr *ngFor="let line of quote.lines">
+              <td style="width: 33.333333%">{{line.productName}}</td>
+              <td style="width: 8.333333%">{{line.productColor}}</td>
+              <td style="width: 16.666667%">{{line.productSize}}</td>
+              <td style="width: 16.666667%">{{line.productComments}}</td>
+              <td style="width: 8.333333%" class="text-right">{{line.quantity}}</td>
+              <td style="width: 8.333333%" class="text-right">{{line.productPrice | number:'1.2-2'}}</td>
+              <td style="width: 8.333333%" class="text-right">{{line.total | number:'1.2-2'}}</td>
+          </tr>
+      </table>
+  </div>
+
+  <div id="totales" class="row">
+      <div class="offset-8 col-4">
+          <table class="table">
+              <tr>
+                  <td>Base imponible</td>
+                  <td class="text-right">{{quote.getTotalWithoutTaxes() | number:'1.2-2'}} €</td>
+              </tr>
+              <tr>
+                  <td>IVA 21%</td>
+                  <td class="text-right">{{quote.getTotalTaxes() | number:'1.2-2'}} €</td>
+              </tr>
+              <tr>
+                  <td><strong>Importe total</strong></td>
+                  <td class="text-right"><strong>{{quote.getTotalWithTaxes() | number:'1.2-2'}} €</strong></td>
+              </tr>
+          </table>
+      </div>
+  </div>
+
+  <!-- Pie del presupuesto -->
+  <div id="condiciones" class="row">
+      <div class="col-3">
+          <p>
+              Plazo de entrega:<br/>
+              Transporte:<br/>
+              Validez del presupuesto:<br/>
+              Forma de pago:
+          </p>
+      </div>
+      <div class="col-9">
+          <p>
+              <span th:text="${budget.deliveryTime}"></span><br/>
+              Incluído en península y Baleares<br/>
+              30 días<br/>
+              Transferencia bancaria<br/>
+              <strong>
+                Banco Sabadell<br/>
+                Titular: Nidara Online, S.L.<br/>
+                IBAN: ES75 0081 1232 5200 0106 0909
+              </strong>
+          </p>
+      </div>
+  </div>
+</div>
+<div id="pie-pagina" class="text-center mt-3">Nidara Online, S.L. - B12938577 - info@sabanasblancas.es</div>
+

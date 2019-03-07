@@ -1,0 +1,45 @@
+@page {
+    size: A4;
+    margin-left: 1.5cm;
+    margin-right: 1.5cm;
+}
+
+body {
+    font-size: 14px;
+}
+
+#datos-empresa {
+    font-size: 12px;
+}
+
+#datos-presupuesto {
+    font-size: 14px;
+}
+
+#lineas {
+    font-size: 11px;
+}
+
+.table > tbody > tr > th,
+.table > tbody > tr > td {
+    border: 1px solid #333 !important;
+}
+
+#totales > div {
+    font-size: 12px;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#condiciones {
+    font-size: 11px;
+    padding-top: 10px;
+    border: 1px solid #333;
+    line-height: 1.3;
+    margin-bottom: 30px;
+}
+
+#pie-pagina {
+    font-size: 11px;
+    width: 100%;
+}

@@ -14,7 +14,7 @@ export class QuotesComponent implements OnInit {
 
   public DEFAULT_PAGE_SIZE = 10;
 
-  public displayedColumns: string[] = ['id', 'date', 'client', 'total', 'state'];
+  public displayedColumns: string[] = ['id', 'date', 'client', 'total', 'state', 'print'];
   public quotes: Quote[] = [];
   public pageSize = this.DEFAULT_PAGE_SIZE;
   public pageNumber = 0;
@@ -50,6 +50,10 @@ export class QuotesComponent implements OnInit {
 
   public newQuote() {
     this.router.navigate(['nuevo'], {relativeTo: this.route});
+  }
+
+  public print(quote: Quote) {
+    this.router.navigate([quote.id, 'imprimir'], {relativeTo: this.route});
   }
 
   public getQuoteStateKeys() {
