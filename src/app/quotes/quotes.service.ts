@@ -8,6 +8,7 @@ import { map } from 'rxjs/operators';
 import { NotificationService } from '../service/notification.service';
 import { ProductService } from '../service/product.service';
 import { IProduct } from '../model/interfaces/product.interface';
+import { QuoteState } from '../model/enums/quote-state';
 
 @Injectable()
 export class QuotesService {
@@ -61,6 +62,20 @@ export class QuotesService {
     } else {
       return this.http.post<any>(url, quote);
     }
+  }
+
+  public cloneQuote(quoteId: number): Promise<void> {
+    return new Promise( (accept, reject) => {
+      this.getQuoteById(String(quoteId)).subscribe( quote => {
+        quote.id = null;
+        quote.client.id = null;
+        quote.lines.forEach( line => { line.id = null; });
+        quote.state = QuoteState.EDITABLE;
+        this.saveQuote(quote).subscribe( () => {
+          accept();
+        }, error => { reject(); });
+      }, error => { reject(); });
+    });
   }
 
 }

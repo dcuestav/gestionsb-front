@@ -14,7 +14,7 @@ export class QuotesComponent implements OnInit {
 
   public DEFAULT_PAGE_SIZE = 10;
 
-  public displayedColumns: string[] = ['id', 'date', 'client', 'total', 'state', 'print'];
+  public displayedColumns: string[] = ['clone', 'id', 'date', 'client', 'total', 'state', 'print'];
   public quotes: Quote[] = [];
   public pageSize = this.DEFAULT_PAGE_SIZE;
   public pageNumber = 0;
@@ -68,6 +68,13 @@ export class QuotesComponent implements OnInit {
     this.service.updateQuoteState(quote.id, newStateValue).subscribe( () => {
       quote.state = QuoteState[newStateValue];
     }, error => this.service.handleError(error) );
+  }
+
+  public clone(quote: Quote) {
+    this.service.cloneQuote(quote.id).then( () => {
+      this.pageNumber = 0;
+      this.getQuotes(this.pageNumber, this.pageSize);
+    });
   }
 
 }
