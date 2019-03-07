@@ -33,7 +33,9 @@ export class QuotePrintComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    window.print();
+    setTimeout( () => {
+      window.print();
+    }, 1000);
   }
 
   public goBack() {

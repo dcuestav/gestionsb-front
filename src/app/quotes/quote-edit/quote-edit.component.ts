@@ -109,17 +109,29 @@ export class QuoteEditComponent implements OnInit {
     }, 150);
   }
 
-  public save() {
-    const quoteToSave = this.quoteForm.value;
-    if (quoteToSave.state !== QuoteState.EDITABLE ||
-      quoteToSave.state !== QuoteState.EDITABLE.toString()) {
-        this.service.showError('Este presupuesto no se puede modificar');
-        return;
-    }
-    quoteToSave.lines = this.lines;
-    this.service.saveQuote(quoteToSave).subscribe( () => {
+  public saveAndGoBack() {
+    this.save().then( () => {
       this.goBack();
-    }, error => this.service.handleError(error) );
+    });
+  }
+
+  private save() {
+    return new Promise( (accept, reject) => {
+      const quoteToSave = this.quoteForm.value;
+      if (quoteToSave.state !== QuoteState.EDITABLE ||
+        quoteToSave.state !== QuoteState.EDITABLE.toString()) {
+          this.service.showError('Este presupuesto no se puede modificar');
+          accept();
+          return;
+      }
+      quoteToSave.lines = this.lines;
+      this.service.saveQuote(quoteToSave).subscribe( () => {
+        accept();
+      }, error => {
+        this.service.handleError(error);
+        reject();
+      });
+    });
   }
 
   public getTaxesKeys() {
@@ -132,6 +144,12 @@ export class QuoteEditComponent implements OnInit {
 
   public getSelectedTaxesLabel() {
     return TaxesLabels[this.quoteForm.get('taxes').value];
+  }
+
+  public saveAndPrint() {
+    this.save().then( () => {
+      this.router.navigate(['imprimir'], { relativeTo: this.route });
+    });
   }
 
 }

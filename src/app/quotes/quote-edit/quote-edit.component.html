@@ -1,19 +1,20 @@
-<div class="row">
+<div class="row no-print">
   <div class="col-sm-6">
     <h2 class="d-inline-block">Presupuesto {{(quote$|async)?.id}}</h2>
   </div>
   <div class="col-sm-6 text-right">
     <button mat-stroked-button (click)="goBack()" class="mr-3">Volver</button>
     <span *ngIf="(quote$|async)?.isEditable()">
-      <button mat-flat-button color="accent" (click)="save()">Guardar</button>
+      <button mat-flat-button color="accent" (click)="saveAndGoBack()" class="mr-3">Guardar</button>
     </span>
     <span *ngIf="!(quote$|async)?.isEditable()">
-      <button mat-flat-button disabled>{{ (quoteStateLabel$|async) }}</button>
+      <button mat-flat-button disabled class="mr-3">{{ (quoteStateLabel$|async) }}</button>
     </span>
+    <button mat-flat-button color="primary" (click)="saveAndPrint()">Imprimir</button>
   </div>
 </div>
 
-<form [formGroup]="quoteForm">
+<form [formGroup]="quoteForm" class="no-print">
   <input type="hidden" formControlName="id">
   <input type="hidden" formControlName="date">
   <input type="hidden" formControlName="state">
