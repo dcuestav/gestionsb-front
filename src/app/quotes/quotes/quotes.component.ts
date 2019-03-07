@@ -41,7 +41,7 @@ export class QuotesComponent implements OnInit {
         this.pageNumber = pageResults.page;
         this.totalElements = pageResults.totalElements;
 
-      }, this.service.handleError );
+      }, error => this.service.handleError(error) );
   }
 
   public goToQuoteDetail(quote: Quote) {
@@ -59,7 +59,7 @@ export class QuotesComponent implements OnInit {
   public quoteStateChange(quote: Quote, newStateValue: string) {
     this.service.updateQuoteState(quote.id, newStateValue).subscribe( () => {
       quote.state = QuoteState[newStateValue];
-    }, this.service.handleError );
+    }, error => this.service.handleError(error) );
   }
 
 }

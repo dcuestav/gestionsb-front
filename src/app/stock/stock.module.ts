@@ -8,12 +8,14 @@ import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
+import { StockService } from './stock.service';
 
 @NgModule({
   declarations: [
     StockComponent,
     StockTableComponent
   ],
+  providers: [StockService],
   imports: [
     CommonModule,
     MatSidenavModule,

@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
-import { StockModule } from './stock.module';
 import { ProductService } from '../service/product.service';
 import { Category } from '../model/category';
 import { IProduct } from '../model/interfaces/product.interface';
 import { Observable } from 'rxjs';
+import { NotificationService } from '../service/notification.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
-@Injectable({
-  providedIn: StockModule
-})
+@Injectable()
 export class StockService {
 
-  constructor(private productService: ProductService) {
+  constructor(private productService: ProductService,
+              private errorService: NotificationService) {
   }
 
   getCategories(): Promise<Category[]> {
@@ -19,6 +19,10 @@ export class StockService {
 
   getProductsOfCategory(category: Category): Observable<IProduct[]> {
     return this.productService.getProductsOfCategory(category);
+  }
+
+  handleError(error: HttpErrorResponse) {
+    this.errorService.showError(error);
   }
 
 }

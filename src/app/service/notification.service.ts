@@ -1,22 +1,27 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ErrorService {
+export class NotificationService {
 
-  constructor(private snackBar: MatSnackBar) { }
+  public notification: Subject<string> = new Subject();
+
+  constructor() {}
 
   public showError(error: HttpErrorResponse) {
+
+    let message = 'Error desconocido';
+
     if (0 === error.status) {
-      this.snackBar.open('No hay conexión');
+      message = 'No hay conexión';
     } else if (error.message) {
-      this.snackBar.open(error.message);
-    } else {
-      this.snackBar.open('Error desconocido');
+      message = error.message;
     }
+
+    this.notification.next(message);
 
     if (error.error) {
       console.error(error.error);

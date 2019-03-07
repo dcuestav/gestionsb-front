@@ -1,4 +1,3 @@
-import { QuoteState } from './../model/enums/quote-state';
 import { Injectable } from '@angular/core';
 import { IQuote } from '../model/interfaces/quote.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
@@ -6,7 +5,7 @@ import { IPage } from '../model/interfaces/page.interface';
 import { Observable } from 'rxjs';
 import { Quote } from '../model/quote.model';
 import { map } from 'rxjs/operators';
-import { ErrorService } from '../service/error.service';
+import { NotificationService } from '../service/notification.service';
 import { ProductService } from '../service/product.service';
 import { IProduct } from '../model/interfaces/product.interface';
 
@@ -14,8 +13,9 @@ import { IProduct } from '../model/interfaces/product.interface';
 export class QuotesService {
 
   constructor(private http: HttpClient,
-              private errorService: ErrorService,
-              private productService: ProductService) { }
+              private errorService: NotificationService,
+              private productService: ProductService) {
+  }
 
   public getQuotes(page: number, size: number) {
 

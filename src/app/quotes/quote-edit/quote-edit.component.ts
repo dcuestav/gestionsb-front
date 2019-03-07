@@ -4,7 +4,7 @@ import { QuotesService } from '../quotes.service';
 import { ActivatedRoute, Router, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 import { Quote } from './../../model/quote.model';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import { QuoteLine } from 'src/app/model/quote-line';
@@ -16,7 +16,7 @@ import { QuoteLine } from 'src/app/model/quote-line';
 })
 export class QuoteEditComponent implements OnInit {
 
-  public quote$: Observable<Quote>;
+  public quote$ = new Subject<Quote>();
   public ready = false;
   private products = [];
   public productNames = [];
@@ -47,10 +47,11 @@ export class QuoteEditComponent implements OnInit {
 
   ngOnInit() {
 
-    this.quote$ = this.route.paramMap.pipe(
-      switchMap((params: ParamMap) =>
-        this.service.getQuoteById(params.get('id')))
-    );
+    this.route.paramMap.subscribe( params => {
+      this.service.getQuoteById(params.get('id')).subscribe( quote => {
+        this.quote$.next(quote);
+      });
+    });
 
     this.quote$.subscribe( quote => {
       if (quote) {
@@ -107,7 +108,7 @@ export class QuoteEditComponent implements OnInit {
     quoteToSave.lines = this.lines;
     this.service.saveQuote(quoteToSave).subscribe( () => {
       this.goBack();
-    }, this.service.handleError );
+    }, error => this.service.handleError(error) );
   }
 
   public getTaxesKeys() {
