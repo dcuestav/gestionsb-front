@@ -1,8 +1,15 @@
 <div class="h-100 p-md-3 p-1">
 
-  <mat-paginator [length]="totalElements" [pageSize]="pageSize" 
-    [pageSizeOptions]="[10, 20, 50, 100]" (page)="loadPage($event)">
-  </mat-paginator>
+  <div class="d-flex align-items-center">
+      <div class="">
+        <button mat-flat-button color="accent" (click)="newQuote()">Nuevo presupuesto</button>
+      </div>
+      <div class="flex-grow-1">
+        <mat-paginator [length]="totalElements" [pageSize]="pageSize" 
+          [pageSizeOptions]="[10, 20, 50, 100]" (page)="loadPage($event)">
+        </mat-paginator>
+      </div>
+  </div>
 
   <table *ngIf="quotes" mat-table [dataSource]="quotes" class="mat-elevation-z8 mt-3 mb-4">
 

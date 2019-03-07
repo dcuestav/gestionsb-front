@@ -48,6 +48,10 @@ export class QuotesComponent implements OnInit {
     this.router.navigate([quote.id], {relativeTo: this.route});
   }
 
+  public newQuote() {
+    this.router.navigate(['nuevo'], {relativeTo: this.route});
+  }
+
   public getQuoteStateKeys() {
     return Object.keys(QuoteState);
   }

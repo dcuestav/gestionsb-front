@@ -1,10 +1,15 @@
 <div class="row">
   <div class="col-sm-6">
-    <h2 class="">Presupuesto {{(quote$|async)?.id}}</h2>
+    <h2 class="d-inline-block">Presupuesto {{(quote$|async)?.id}}</h2>
   </div>
   <div class="col-sm-6 text-right">
     <button mat-stroked-button (click)="goBack()" class="mr-3">Volver</button>
-    <button mat-flat-button color="accent" (click)="save()" class="">Guardar</button>
+    <span *ngIf="(quote$|async)?.isEditable()">
+      <button mat-flat-button color="accent" (click)="save()">Guardar</button>
+    </span>
+    <span *ngIf="!(quote$|async)?.isEditable()">
+      <button mat-flat-button disabled>{{ (quoteStateLabel$|async) }}</button>
+    </span>
   </div>
 </div>
 
@@ -89,7 +94,7 @@
     </div>
   </div>
 
-  <mat-card class="budget-lines my-4">
+  <mat-card class="quote-lines my-4">
 
     <div class="table-container">
 

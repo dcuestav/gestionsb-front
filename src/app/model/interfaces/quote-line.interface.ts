@@ -1,6 +1,6 @@
 export interface IQuoteLine {
    id?: number;
-   lineNumber: number;
+   lineNumber?: number;
    productReference?: string;
    productName?: string;
    productColor?: string;

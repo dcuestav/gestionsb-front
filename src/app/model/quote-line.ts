@@ -12,8 +12,8 @@ export class QuoteLine {
     quantity: number;
 
     constructor(lineDTO: IQuoteLine) {
-        this.id = lineDTO.id;
-        this.lineNumber = lineDTO.lineNumber;
+        this.id = lineDTO.id ? lineDTO.id : null;
+        this.lineNumber = lineDTO.lineNumber ? lineDTO.lineNumber : 1;
         this.productReference = lineDTO.productReference ? lineDTO.productReference : '';
         this.productName = lineDTO.productName ? lineDTO.productName : '';
         this.productColor = lineDTO.productColor ? lineDTO.productColor : '';

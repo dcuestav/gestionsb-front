@@ -1,13 +1,14 @@
+import { QuoteState, QuoteStateLabels } from './../../model/enums/quote-state';
 import { Taxes, TaxesLabels } from './../../model/enums/taxes';
 import { Component, OnInit } from '@angular/core';
 import { QuotesService } from '../quotes.service';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Quote } from './../../model/quote.model';
-import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import { QuoteLine } from 'src/app/model/quote-line';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-quote-edit',
@@ -16,8 +17,10 @@ import { QuoteLine } from 'src/app/model/quote-line';
 })
 export class QuoteEditComponent implements OnInit {
 
-  public quote$ = new Subject<Quote>();
-  public ready = false;
+  public quote$ = new BehaviorSubject<Quote>(new Quote({}));
+  public quoteStateLabel$ = this.quote$.pipe( map(quote => QuoteStateLabels[quote.state]) );
+  public quoteStateEditable$ = this.quote$.pipe( map(quote => quote.state === QuoteState.EDITABLE) );
+
   private products = [];
   public productNames = [];
 
@@ -48,7 +51,11 @@ export class QuoteEditComponent implements OnInit {
   ngOnInit() {
 
     this.route.paramMap.subscribe( params => {
-      this.service.getQuoteById(params.get('id')).subscribe( quote => {
+      const quoteId = params.get('id');
+      if (!quoteId || isNaN(Number(quoteId))) {
+        return;
+      }
+      this.service.getQuoteById(quoteId).subscribe( quote => {
         this.quote$.next(quote);
       });
     });
@@ -75,7 +82,6 @@ export class QuoteEditComponent implements OnInit {
     this.renumberLines();
     delete quote.lines;
     this.quoteForm.setValue(quote);
-    this.ready = true;
   }
 
   public getTotal() {
@@ -105,6 +111,11 @@ export class QuoteEditComponent implements OnInit {
 
   public save() {
     const quoteToSave = this.quoteForm.value;
+    if (quoteToSave.state !== QuoteState.EDITABLE ||
+      quoteToSave.state !== QuoteState.EDITABLE.toString()) {
+        this.service.showError('Este presupuesto no se puede modificar');
+        return;
+    }
     quoteToSave.lines = this.lines;
     this.service.saveQuote(quoteToSave).subscribe( () => {
       this.goBack();

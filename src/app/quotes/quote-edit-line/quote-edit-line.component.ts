@@ -83,6 +83,7 @@ export class QuoteEditLineComponent implements OnInit {
     });
 
     this.form.valueChanges.subscribe( value => {
+      this.quoteLine.id = value.id;
       this.quoteLine.productReference = value.productReference;
       this.quoteLine.productName = value.productName;
       this.quoteLine.productColor = value.productColor;
