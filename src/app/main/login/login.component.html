@@ -1,0 +1,36 @@
+<div *ngIf="isLoggedIn; else loggedOut">
+  Has entrado como {{roles}}.
+</div>
+ 
+<ng-template #loggedOut>
+  <div class="d-flex h-100 align-items-center justify-content-center">
+    <mat-card class="w-100" style="max-width:350px;">
+      <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
+
+        <mat-form-field class="w-100">
+          <input matInput placeholder="Usuario" name="username" [(ngModel)]="form.username" #username="ngModel" required>
+          <mat-error *ngIf="f.submitted && username.invalid && username.errors.required">
+            Introduce un nombre de usuario
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field class="w-100">
+          <input matInput placeholder="Contraseña" type="password" name="password" [(ngModel)]="form.password" #password="ngModel" required minlength="5" >
+          <mat-error *ngIf="f.submitted && password.invalid && password.errors.required">
+            Introduce una contraseña
+          </mat-error>
+          <mat-error *ngIf="f.submitted && password.invalid && password.errors.minlength">
+            Debe tener al menos 5 caracteres
+          </mat-error>
+        </mat-form-field>
+        
+        <div class="form-group mt-3">
+          <button class="btn btn-primary">Login</button>
+          <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger mt-3">
+            Error: {{errorMessage}}
+          </div>
+        </div>
+      </form>
+    </mat-card>
+  </div>
+</ng-template>

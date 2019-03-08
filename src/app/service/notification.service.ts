@@ -17,6 +17,8 @@ export class NotificationService {
 
     if (0 === error.status) {
       message = 'No hay conexión';
+    } else if (401 === error.status) {
+        message = 'Fallo de autorización';
     } else if (error.message) {
       message = error.message;
     }
