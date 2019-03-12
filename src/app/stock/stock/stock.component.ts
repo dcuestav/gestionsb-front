@@ -14,9 +14,9 @@ export class StockComponent implements OnInit {
 
   @ViewChild(MatSidenav) matSidenav;
 
-  private categories: Category[] = [];
+  categories: Category[] = [];
   private selectedCategory: Category;
-  private products: IProduct[] = [];
+  products: IProduct[] = [];
 
   constructor(private stockService: StockService,
               private responsiveService: ResponsiveService) { }
