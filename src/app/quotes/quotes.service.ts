@@ -9,9 +9,12 @@ import { NotificationService } from '../service/notification.service';
 import { ProductService } from '../service/product.service';
 import { IProduct } from '../model/interfaces/product.interface';
 import { QuoteState } from '../model/enums/quote-state';
+import { environment } from 'src/environments/environment';
 
 @Injectable()
 export class QuotesService {
+
+  private quotesUrl = `${environment.apiServer}/quote`;
 
   constructor(private http: HttpClient,
               private errorService: NotificationService,
@@ -20,14 +23,14 @@ export class QuotesService {
 
   public getQuotes(page: number, size: number) {
 
-    const url = `http://localhost:8080/quote/?page=${page}&size=${size}`;
+    const url = `${this.quotesUrl}/?page=${page}&size=${size}`;
 
     return this.http.get<IPage<IQuote>>(url);
   }
 
   public getQuoteById(id: string): Observable<Quote> {
 
-    const url = `http://localhost:8080/quote/${id}`;
+    const url = `${this.quotesUrl}/${id}`;
 
     return this.http.get<IQuote>(url).pipe(
       map(quoteDto => new Quote(quoteDto))
@@ -48,19 +51,17 @@ export class QuotesService {
 
   public updateQuoteState(quoteId: number, newStateKey: string) {
 
-    const url = `http://localhost:8080/quote/${quoteId}/state`;
+    const url = `${this.quotesUrl}/${quoteId}/state`;
 
     return this.http.put<any>(url, newStateKey);
   }
 
   public saveQuote(quote: Quote) {
 
-    const url = `http://localhost:8080/quote`;
-
     if (quote.id) {
-      return this.http.put<any>(url, quote);
+      return this.http.put<any>(this.quotesUrl, quote);
     } else {
-      return this.http.post<any>(url, quote);
+      return this.http.post<any>(this.quotesUrl, quote);
     }
   }
 

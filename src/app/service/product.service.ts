@@ -3,11 +3,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { IProduct } from '../model/interfaces/product.interface';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProductService {
+
+  private productsUrl = `${environment.apiServer}/products`;
 
   constructor(private http: HttpClient) { }
 
@@ -33,14 +36,12 @@ export class ProductService {
 
   getAllProducts(): Observable<IProduct[]> {
 
-    const url = `http://localhost:8080/products`;
-
-    return this.http.get<IProduct[]>(url);
+    return this.http.get<IProduct[]>(this.productsUrl);
   }
 
   getProductsOfCategory(selectedCategory: Category): Observable<IProduct[]> {
 
-    const url = `http://localhost:8080/products/${selectedCategory.id}`;
+    const url = `${this.productsUrl}/${selectedCategory.id}`;
 
     return this.http.get<IProduct[]>(url);
   }

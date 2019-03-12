@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthLoginInfo } from './login-info';
 import { JwtResponse } from './jwt-response';
+import { environment } from 'src/environments/environment';
 
 const httpOptions = {
   headers: new HttpHeaders({ 'Content-Type': 'application/json' })
@@ -13,7 +14,7 @@ const httpOptions = {
 })
 export class AuthService {
 
-  private loginUrl = 'http://localhost:8080/auth/signin';
+  private loginUrl = `${environment.apiServer}/auth/signin`;
 
   constructor(private http: HttpClient) { }
 
