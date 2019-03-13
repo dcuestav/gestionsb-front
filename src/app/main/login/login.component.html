@@ -25,7 +25,8 @@
         </mat-form-field>
         
         <div class="form-group mt-3">
-          <button class="btn btn-primary">Login</button>
+          <button class="btn btn-primary" [disabled]="loading">Login</button>
+          <mat-spinner *ngIf="loading" diameter="22" class="d-inline-block ml-3 pt-1"></mat-spinner>
           <div *ngIf="f.submitted && isLoginFailed" class="alert alert-danger mt-3">
             Error: {{errorMessage}}
           </div>

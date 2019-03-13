@@ -16,7 +16,7 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { LoginComponent } from './main/login/login.component';
 import { httpInterceptorProviders } from './auth/auth-interceptor';
-import { MatCardModule, MatInputModule } from '@angular/material';
+import { MatCardModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material';
 import { HomeComponent } from './main/home/home.component';
 
 @NgModule({
@@ -40,6 +40,7 @@ import { HomeComponent } from './main/home/home.component';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
+    MatProgressSpinnerModule,
   ],
   providers: [
     httpInterceptorProviders,
