@@ -18,6 +18,13 @@ export class StockComponent implements OnInit {
   private selectedCategory: Category;
   products: IProduct[] = [];
 
+  get increments() {
+    return this.stockService.stockIncrements;
+  }
+  get incrementChanges() {
+    return this.stockService.stockIncrements.some( increment => increment > 0 || increment < 0);
+  }
+
   constructor(private stockService: StockService,
               private responsiveService: ResponsiveService) { }
 

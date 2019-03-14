@@ -1,12 +1,13 @@
-<div class="h-100 d-flex flex-column">
+<div class="h-100 d-flex flex-column" style="overflow-x: hidden;">
 
     <mat-toolbar color="primary" class="mat-elevation-z4 no-print">
-        <span class="mr-5">Gestión SábanasBlancas.es</span>
+        <span class="d-none d-md-inline mr-5">Gestión SábanasBlancas.es</span>
+        <span class="d-inline d-md-none mr-3">Gestión SB</span>
         <button *ngIf="showStock" mat-button routerLink="/stock" routerLinkActive="active">
-            <mat-icon>crop_portrait</mat-icon>Productos
+            <mat-icon>crop_portrait</mat-icon><span class="d-none d-md-inline">Productos</span>
         </button>
-        <button *ngIf="showQuotes" mat-button routerLink="/presupuestos" routerLinkActive="active" class="">
-            <mat-icon>list_alt</mat-icon>Presupuestos
+        <button *ngIf="showQuotes" mat-button routerLink="/presupuestos" routerLinkActive="active">
+            <mat-icon>list_alt</mat-icon><span class="d-none d-md-inline">Presupuestos</span>
         </button>
         <button *ngIf="isLoggedIn" mat-icon-button class="ml-auto" (click)="logout()">
             <mat-icon>logout</mat-icon>

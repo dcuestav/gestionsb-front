@@ -41,3 +41,12 @@ table {
         max-height: unset !important;
     }
 }
+
+.stock-variation-buttons.mat-button-toggle-group {
+    border-width: 0 !important;
+    .mat-button-toggle-label-content {
+        line-height: 45px;
+        padding: 0 !important;
+        width: 32px;
+    }
+}

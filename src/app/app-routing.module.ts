@@ -6,10 +6,12 @@ import { StockComponent } from './stock/stock/stock.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './main/login/login.component';
+import { StockIncrementSummaryComponent } from './stock/stock-increment-summary/stock-increment-summary.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'stock', component: StockComponent },
+  { path: 'stock/cambios', component: StockIncrementSummaryComponent },
   { path: 'presupuestos', component: QuotesComponent },
   { path: 'presupuestos/:id', component: QuoteEditComponent },
   { path: 'presupuestos/:id/imprimir', component: QuotePrintComponent },

@@ -1,3 +1,4 @@
+import { StockService } from './../stock.service';
 import { IProduct } from 'src/app/model/interfaces/product.interface';
 import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import * as _ from 'lodash';
@@ -11,7 +12,7 @@ import { ResponsiveService } from 'src/app/service/responsive.service';
 })
 export class StockTableComponent implements OnInit {
 
-  public displayedColumns: string[] = ['reference', 'name', 'color', 'size', 'price', 'currentStock'];
+  public displayedColumns: string[] = ['reference', 'name', 'color', 'size', 'currentStock'];
 
   private allProducts: IProduct[];
   public models: string[];
@@ -34,7 +35,12 @@ export class StockTableComponent implements OnInit {
     return this.allProducts;
   }
 
-  constructor(private responsiveService: ResponsiveService) {
+  get increments() {
+    return this.stockService.stockIncrements;
+  }
+
+  constructor(private responsiveService: ResponsiveService,
+              private stockService: StockService) {
   }
 
   public isMobile() {
@@ -43,7 +49,7 @@ export class StockTableComponent implements OnInit {
 
   ngOnInit() {
     if (this.isMobile()) {
-      this.displayedColumns = this.displayedColumns.filter( column => column !== 'name' && column !== 'price');
+      this.displayedColumns = ['color', 'size', 'currentStock'];
     }
   }
 
@@ -54,6 +60,10 @@ export class StockTableComponent implements OnInit {
 
   toggleCategoriesMenu() {
     this.toggleCategoriesMenuEvent.emit(null);
+  }
+
+  setNewStockVariation(idStock: number, stockVariation: number) {
+    console.info(`El producto ${idStock} tiene una variación de ${stockVariation}`);
   }
 
   private applyFilter() {

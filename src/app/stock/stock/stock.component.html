@@ -14,5 +14,8 @@
   <!-- Principal -->
   <mat-sidenav-content>
     <app-stock-table [products]="products" (toggleCategoriesMenuEvent)="showHideMenu()"></app-stock-table>
+    <div *ngIf="incrementChanges" class="review-increments-button">
+      <a mat-flat-button color="accent" [routerLink]="['./cambios']">Revisar cambios</a>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

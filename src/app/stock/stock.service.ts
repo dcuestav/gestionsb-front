@@ -9,6 +9,8 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Injectable()
 export class StockService {
 
+  stockIncrements = [];
+
   constructor(private productService: ProductService,
               private errorService: NotificationService) {
   }
@@ -18,7 +20,19 @@ export class StockService {
   }
 
   getProductsOfCategory(category: Category): Observable<IProduct[]> {
-    return this.productService.getProductsOfCategory(category);
+    const products$ = this.productService.getProductsOfCategory(category);
+    this.fillStockIncrements(products$);
+    return products$;
+  }
+
+  private fillStockIncrements( products$: Observable<IProduct[]>) {
+    products$.subscribe( products => {
+      products.forEach( product => {
+        if (product.idStock && this.stockIncrements[product.idStock] === undefined) {
+          this.stockIncrements[product.idStock] = 0;
+        }
+      } );
+    });
   }
 
   handleError(error: HttpErrorResponse) {

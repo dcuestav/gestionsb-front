@@ -1,0 +1,21 @@
+<div class="d-flex justify-content-end align-items-center">
+  <div *ngIf="!variation; else ifvariation">
+      <span class="stock-value">{{currentValue}}</span>
+  </div>
+  <div class="">
+    <mat-button-toggle-group (change)="addIncrement($event)" class="stock-variation-buttons ml-3">
+      <mat-button-toggle value="-10">-10</mat-button-toggle>
+      <mat-button-toggle value="-1">-1</mat-button-toggle>
+      <mat-button-toggle value="1">+1</mat-button-toggle>
+      <mat-button-toggle value="10">+10</mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+</div>
+
+<ng-template #ifvariation>
+  <div *ngIf="variation">
+    <span class="pr-3">{{currentValue}}</span>
+    <strong class="pr-3">{{variation>0 ? ('+' + variation) : variation}}</strong>
+    <span class="stock-value">{{currentValue + variation}}</span>
+  </div>
+</ng-template>

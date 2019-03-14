@@ -1,4 +1,5 @@
 export interface IProduct {
+    idStock?: number;
     idProduct?: number;
     idProductAttribute?: number;
     reference?: string;
