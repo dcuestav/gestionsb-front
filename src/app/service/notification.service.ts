@@ -29,5 +29,9 @@ export class NotificationService {
       console.error(error.error);
     }
   }
+
+  public showInfo(message: string) {
+    this.notification.next(message);
+  }
 }
 

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { IProduct } from '../model/interfaces/product.interface';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { StockIncrements } from '../stock/stock-increments';
 
 @Injectable({
   providedIn: 'root'
@@ -44,6 +45,20 @@ export class ProductService {
     const url = `${this.productsUrl}/${selectedCategory.id}`;
 
     return this.http.get<IProduct[]>(url);
+  }
+
+  getStockProducts(stockIds: any[]): Observable<IProduct[]> {
+
+    const url = `${this.productsUrl}/stock`;
+
+    return this.http.post<IProduct[]>(url, stockIds);
+  }
+
+  updateStocks(stockIncrements: StockIncrements) {
+
+    const url = `${this.productsUrl}/stock`;
+
+    return this.http.put<void>(url, stockIncrements.getRequestObject());
   }
 
 }

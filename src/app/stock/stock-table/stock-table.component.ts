@@ -62,10 +62,6 @@ export class StockTableComponent implements OnInit {
     this.toggleCategoriesMenuEvent.emit(null);
   }
 
-  setNewStockVariation(idStock: number, stockVariation: number) {
-    console.info(`El producto ${idStock} tiene una variación de ${stockVariation}`);
-  }
-
   private applyFilter() {
     if (this.filterModel) {
       this.filteredProducts = this.allProducts.filter( product => product.name === this.filterModel );

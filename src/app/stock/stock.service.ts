@@ -1,3 +1,4 @@
+import { StockIncrements } from './stock-increments';
 import { Injectable } from '@angular/core';
 import { ProductService } from '../service/product.service';
 import { Category } from '../model/category';
@@ -9,7 +10,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Injectable()
 export class StockService {
 
-  stockIncrements = [];
+  stockIncrements = new StockIncrements();
 
   constructor(private productService: ProductService,
               private errorService: NotificationService) {
@@ -21,18 +22,16 @@ export class StockService {
 
   getProductsOfCategory(category: Category): Observable<IProduct[]> {
     const products$ = this.productService.getProductsOfCategory(category);
-    this.fillStockIncrements(products$);
     return products$;
   }
 
-  private fillStockIncrements( products$: Observable<IProduct[]>) {
-    products$.subscribe( products => {
-      products.forEach( product => {
-        if (product.idStock && this.stockIncrements[product.idStock] === undefined) {
-          this.stockIncrements[product.idStock] = 0;
-        }
-      } );
-    });
+  getProductWithIncrements(): Observable<IProduct[]> {
+    const stockIds = this.stockIncrements.getStockIds();
+    return this.productService.getStockProducts(stockIds);
+  }
+
+  saveStockIncrements(): Observable<void> {
+    return this.productService.updateStocks(this.stockIncrements);
   }
 
   handleError(error: HttpErrorResponse) {

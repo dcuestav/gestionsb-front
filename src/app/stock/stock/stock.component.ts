@@ -22,7 +22,7 @@ export class StockComponent implements OnInit {
     return this.stockService.stockIncrements;
   }
   get incrementChanges() {
-    return this.stockService.stockIncrements.some( increment => increment > 0 || increment < 0);
+    return this.stockService.stockIncrements.hasChanges();
   }
 
   constructor(private stockService: StockService,
