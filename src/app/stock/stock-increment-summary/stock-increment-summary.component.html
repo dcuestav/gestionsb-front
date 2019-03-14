@@ -1,7 +1,10 @@
 <div class="h-100 px-md-3 px-1 py-3">
   <div class="d-flex">
     <button mat-stroked-button [routerLink]="['../']">Volver</button>
-    <button mat-flat-button *ngIf="products && products.length" color="accent" (click)="saveAndGoBack()" class="ml-auto">Guardar</button>
+    <span *ngIf="products && products.length" class="ml-auto">
+      <button mat-stroked-button (click)="clear()">Deshacer</button>
+      <button mat-flat-button color="accent" (click)="saveAndGoBack()" class="ml-3">Guardar</button>
+    </span>
   </div>
 
   <table *ngIf="products && products.length; else emptyMessage" mat-table [dataSource]="products" class="mat-elevation-z8 mt-3 mb-4">

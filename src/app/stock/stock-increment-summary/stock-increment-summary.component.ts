@@ -38,4 +38,9 @@ export class StockIncrementSummaryComponent implements OnInit {
     });
   }
 
+  clear() {
+    this.increments.clear();
+    this.products = [];
+  }
+
 }
