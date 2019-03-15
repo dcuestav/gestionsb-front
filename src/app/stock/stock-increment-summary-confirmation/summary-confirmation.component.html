@@ -1,0 +1,8 @@
+<p>Hay cambios en {{data.numChanges}} producto{{data.numChanges === 1 ? '' : 's'}}</p>
+<mat-form-field class="w-100">
+  <input matInput [(ngModel)]="reason" placeholder="Motivo de los cambios">
+</mat-form-field>
+<div class="text-right">
+  <button mat-stroked-button (click)="cancel()">Cancelar</button>
+  <button mat-flat-button color="accent" (click)="confirm()" class="ml-3">Confirmar</button>
+</div>

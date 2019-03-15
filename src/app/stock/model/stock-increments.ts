@@ -1,3 +1,5 @@
+import { StockProductVariation } from './stock-variation';
+
 export class StockIncrements {
 
     private increments = [];
@@ -33,8 +35,10 @@ export class StockIncrements {
         return Object.keys(this.increments);
     }
 
-    getRequestObject() {
-        return this.getStockIds().map( key => ({ stockId: key, increment: this.get(Number(key)) }) );
+    getRequestObject(): StockProductVariation[] {
+        return this.getStockIds().map( key => (
+            { stockId: Number(key),
+              increment: this.get(Number(key)) }) );
     }
 
     private deleteIfZero(key: number) {

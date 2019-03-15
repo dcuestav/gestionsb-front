@@ -1,4 +1,5 @@
-import { StockIncrements } from './stock-increments';
+import { StockVariation } from './model/stock-variation';
+import { StockIncrements } from './model/stock-increments';
 import { Injectable } from '@angular/core';
 import { ProductService } from '../service/product.service';
 import { Category } from '../model/category';
@@ -30,8 +31,12 @@ export class StockService {
     return this.productService.getStockProducts(stockIds);
   }
 
-  saveStockIncrements(): Observable<void> {
-    return this.productService.updateStocks(this.stockIncrements);
+  saveStockIncrements(reason?: string): Observable<void> {
+    const stockVariation: StockVariation = {
+      customReason: reason,
+      stockIncrements: this.stockIncrements.getRequestObject()
+    };
+    return this.productService.updateStocks(stockVariation);
   }
 
   handleError(error: HttpErrorResponse) {

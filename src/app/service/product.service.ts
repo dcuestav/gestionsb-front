@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { IProduct } from '../model/interfaces/product.interface';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { StockIncrements } from '../stock/stock-increments';
+import { StockVariation } from '../stock/model/stock-variation';
 
 @Injectable({
   providedIn: 'root'
@@ -54,11 +54,11 @@ export class ProductService {
     return this.http.post<IProduct[]>(url, stockIds);
   }
 
-  updateStocks(stockIncrements: StockIncrements) {
+  updateStocks(stockVariation: StockVariation) {
 
     const url = `${this.productsUrl}/stock`;
 
-    return this.http.put<void>(url, stockIncrements.getRequestObject());
+    return this.http.put<void>(url, stockVariation);
   }
 
 }

@@ -1,8 +1,15 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter } from '@angular/core';
 import { StockService } from '../stock.service';
 import { IProduct } from 'src/app/model/interfaces/product.interface';
 import { NotificationService } from 'src/app/service/notification.service';
+import { MatDialog } from '@angular/material';
+import { SummaryConfirmationComponent } from '../stock-increment-summary-confirmation/summary-confirmation.component';
+
+export interface DialogData {
+  numChanges: number;
+  confirmSave: EventEmitter<string>;
+}
 
 @Component({
   selector: 'app-stock-increment-summary',
@@ -13,6 +20,7 @@ export class StockIncrementSummaryComponent implements OnInit {
 
   products: IProduct[];
   public displayedColumns: string[] = ['reference', 'name', 'color', 'size', 'currentStock'];
+  public confirmSave = new EventEmitter<string>();
 
   get increments() {
     return this.stockService.stockIncrements;
@@ -21,20 +29,39 @@ export class StockIncrementSummaryComponent implements OnInit {
   constructor(private stockService: StockService,
               private notificationService: NotificationService,
               private route: ActivatedRoute,
-              private router: Router) {
+              private router: Router,
+              public dialog: MatDialog) {
   }
 
   ngOnInit() {
+
     this.stockService.getProductWithIncrements().subscribe( products => {
       this.products = products;
     });
+
+    this.confirmSave.subscribe( reason => {
+      this.saveAndGoBack(reason);
+    } );
   }
 
-  saveAndGoBack() {
-    this.stockService.saveStockIncrements().subscribe( () => {
+  private saveAndGoBack(reason: string) {
+    this.stockService.saveStockIncrements(reason).subscribe( () => {
       this.increments.clear();
       this.notificationService.showInfo('Stock actualizado correctamente');
       this.router.navigate(['../'], { relativeTo: this.route });
+    });
+  }
+
+  openConfirmationDialog(): void {
+    const dialogRef = this.dialog.open(SummaryConfirmationComponent, {
+      width: '350px',
+      data: {
+        numChanges: this.increments.getStockIds().length,
+        confirmSave: this.confirmSave
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
     });
   }
 

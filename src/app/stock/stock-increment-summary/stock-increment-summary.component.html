@@ -3,7 +3,7 @@
     <button mat-stroked-button [routerLink]="['../']">Volver</button>
     <span *ngIf="products && products.length" class="ml-auto">
       <button mat-stroked-button (click)="clear()">Deshacer</button>
-      <button mat-flat-button color="accent" (click)="saveAndGoBack()" class="ml-3">Guardar</button>
+      <button mat-flat-button color="accent" (click)="openConfirmationDialog()" class="ml-3">Guardar</button>
     </span>
   </div>
 
