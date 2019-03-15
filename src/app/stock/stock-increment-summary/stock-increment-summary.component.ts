@@ -19,7 +19,7 @@ export interface DialogData {
 export class StockIncrementSummaryComponent implements OnInit {
 
   products: IProduct[];
-  public displayedColumns: string[] = ['reference', 'name', 'color', 'size', 'currentStock'];
+  public displayedColumns: string[] = ['reference', 'name', 'color', 'size', 'stock'];
   public confirmSave = new EventEmitter<string>();
 
   get increments() {

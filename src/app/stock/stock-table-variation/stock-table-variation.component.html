@@ -2,12 +2,12 @@
   <div *ngIf="!variation; else ifvariation">
       <span class="stock-value">{{currentValue}}</span>
   </div>
-  <div class="">
+  <div>
     <mat-button-toggle-group (change)="addIncrement($event)" class="stock-variation-buttons ml-3">
-      <mat-button-toggle value="-10">-10</mat-button-toggle>
+      <mat-button-toggle value="-10" class="d-none d-md-block">-10</mat-button-toggle>
       <mat-button-toggle value="-1">-1</mat-button-toggle>
       <mat-button-toggle value="1">+1</mat-button-toggle>
-      <mat-button-toggle value="10">+10</mat-button-toggle>
+      <mat-button-toggle value="10" class="d-none d-md-block">+10</mat-button-toggle>
     </mat-button-toggle-group>
   </div>
 </div>

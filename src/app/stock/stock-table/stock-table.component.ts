@@ -12,7 +12,7 @@ import { ResponsiveService } from 'src/app/service/responsive.service';
 })
 export class StockTableComponent implements OnInit {
 
-  public displayedColumns: string[] = ['reference', 'name', 'color', 'size', 'currentStock'];
+  public displayedColumns: string[] = ['reference', 'name', 'color', 'size', 'stock'];
 
   private allProducts: IProduct[];
   public models: string[];
@@ -49,7 +49,7 @@ export class StockTableComponent implements OnInit {
 
   ngOnInit() {
     if (this.isMobile()) {
-      this.displayedColumns = ['color', 'size', 'currentStock'];
+      this.displayedColumns = ['reference', 'color', 'size', 'stock'];
     }
   }
 

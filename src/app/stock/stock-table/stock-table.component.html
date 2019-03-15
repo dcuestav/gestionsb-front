@@ -1,48 +1,52 @@
-<div class="h-100 px-md-3 px-1 py-3">
+<div class="h-100 py-3" style="overflow-x: hidden;">
 
   <mat-chip-list *ngIf="models && models.length" class="d-inline-block ml-2">
     <mat-chip (click)="toggleCategoriesMenu(model)"><mat-icon>menu</mat-icon></mat-chip>
     <mat-chip *ngFor="let model of models" (click)="toggleFilter(model)" [selected]="model===filterModel">{{model}}</mat-chip>
   </mat-chip-list>
 
-  <table *ngIf="filteredProducts && filteredProducts.length" mat-table [dataSource]="filteredProducts" class="mat-elevation-z8 mt-3 mb-4">
+  <div class="table-container px-0 px-md-3">
 
-    <ng-container matColumnDef="reference">
-      <th mat-header-cell *matHeaderCellDef> Referencia </th>
-      <td mat-cell *matCellDef="let product"> {{product.reference}} </td>
-    </ng-container>
+    <table mat-table *ngIf="filteredProducts && filteredProducts.length" [dataSource]="filteredProducts" class="mat-elevation-z8 mt-3 mb-4">
 
-    <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef> Nombre </th>
-      <td mat-cell *matCellDef="let product"> {{product.name}} </td>
-    </ng-container>
+      <ng-container matColumnDef="reference" sticky>
+        <th mat-header-cell *matHeaderCellDef> Referencia </th>
+        <td mat-cell *matCellDef="let product"> {{product.reference}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="color">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> Color </th>
-      <td mat-cell *matCellDef="let product" class="text-center"> {{product.color}} </td>
-    </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef> Nombre </th>
+        <td mat-cell *matCellDef="let product"> {{product.name}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="size">
-      <th mat-header-cell *matHeaderCellDef class="text-center"> Talla </th>
-      <td mat-cell *matCellDef="let product" class="text-center"> {{product.size}} </td>
-    </ng-container>
+      <ng-container matColumnDef="color">
+        <th mat-header-cell *matHeaderCellDef class="text-center"> Color </th>
+        <td mat-cell *matCellDef="let product" class="text-center"> {{product.color}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="price">
-      <th mat-header-cell *matHeaderCellDef class="text-right"> PVP </th>
-      <td mat-cell *matCellDef="let product" class="text-right"> {{product.price|number:'1.2-2'}} €</td>
-    </ng-container>
+      <ng-container matColumnDef="size">
+        <th mat-header-cell *matHeaderCellDef class="text-center"> Talla </th>
+        <td mat-cell *matCellDef="let product" class="text-center"> {{product.size}} </td>
+      </ng-container>
 
-    <ng-container matColumnDef="currentStock">
-      <th mat-header-cell *matHeaderCellDef class="text-center">Stock</th>
-      <td mat-cell *matCellDef="let product" class="text-right pr-0" style="max-width: 200px;">
-        <app-stock-table-variation [currentValue]="product.currentStock" 
-          [variation]="increments.get(product.idStock)" 
-          (variationChange)="increments.set(product.idStock, $event)"></app-stock-table-variation>
-      </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef class="text-right"> PVP </th>
+        <td mat-cell *matCellDef="let product" class="text-right"> {{product.price|number:'1.2-2'}} €</td>
+      </ng-container>
 
-  </table>
+      <ng-container matColumnDef="stock">
+        <th mat-header-cell *matHeaderCellDef class="text-center">Stock</th>
+        <td mat-cell *matCellDef="let product" class="text-right pr-0" style="max-width: 200px;">
+          <app-stock-table-variation [currentValue]="product.currentStock" 
+            [variation]="increments.get(product.idStock)" 
+            (variationChange)="increments.set(product.idStock, $event)"></app-stock-table-variation>
+        </td>
+      </ng-container>
+    
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+    </table>
+
+  </div>
 </div>
