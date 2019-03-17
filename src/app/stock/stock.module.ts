@@ -21,6 +21,7 @@ import { StockService } from './stock.service';
 import { StockTableVariationComponent } from './stock-table-variation/stock-table-variation.component';
 import { StockIncrementSummaryComponent } from './stock-increment-summary/stock-increment-summary.component';
 import { SummaryConfirmationComponent } from './stock-increment-summary-confirmation/summary-confirmation.component';
+import { HistoryComponent } from './history/history/history.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { SummaryConfirmationComponent } from './stock-increment-summary-confirma
     StockTableComponent,
     StockTableVariationComponent,
     StockIncrementSummaryComponent,
-    SummaryConfirmationComponent
+    SummaryConfirmationComponent,
+    HistoryComponent
   ],
   providers: [StockService],
   imports: [

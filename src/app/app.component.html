@@ -6,6 +6,9 @@
         <button *ngIf="showStock" mat-button routerLink="/stock" routerLinkActive="active">
             <mat-icon>crop_portrait</mat-icon><span class="d-none d-md-inline">Productos</span>
         </button>
+        <button *ngIf="showStock" mat-button routerLink="/stock/movimientos" routerLinkActive="active">
+            <mat-icon>swap_horiz</mat-icon><span class="d-none d-md-inline">Movimientos</span>
+        </button>
         <button *ngIf="showQuotes" mat-button routerLink="/presupuestos" routerLinkActive="active">
             <mat-icon>list_alt</mat-icon><span class="d-none d-md-inline">Presupuestos</span>
         </button>

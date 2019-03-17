@@ -1,3 +1,4 @@
+import { HistoryComponent } from './stock/history/history/history.component';
 import { HomeComponent } from './main/home/home.component';
 import { QuotePrintComponent } from './quotes/quote-print/quote-print.component';
 import { QuoteEditComponent } from './quotes/quote-edit/quote-edit.component';
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'stock', component: StockComponent },
   { path: 'stock/cambios', component: StockIncrementSummaryComponent },
+  { path: 'stock/movimientos', component: HistoryComponent },
   { path: 'presupuestos', component: QuotesComponent },
   { path: 'presupuestos/:id', component: QuoteEditComponent },
   { path: 'presupuestos/:id/imprimir', component: QuotePrintComponent },
