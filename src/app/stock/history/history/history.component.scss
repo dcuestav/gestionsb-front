@@ -1,0 +1,27 @@
+.table-container {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    min-width: 900px;
+    table-layout: fixed;
+
+    .mat-column-date,
+    .mat-column-reason,
+    .mat-column-reference,
+    .mat-column-size {
+        width: 100%;
+    }
+
+    .mat-column-order,
+    .mat-column-color,
+    .mat-column-quantity {
+        width: 75%;
+    }
+
+    .mat-column-name {
+        width: 200%;
+    }
+
+}

@@ -1,21 +1,35 @@
 <div class="h-100 py-3" style="overflow-x: hidden;">
 
+  <div class="d-flex px-3">
+    <button mat-stroked-button [routerLink]="['../']">Volver</button>
+    <span class="ml-auto">
+      <button mat-stroked-button color="primary" (click)="previousDay()">Día anterior</button>
+      <button mat-stroked-button color="primary" (click)="nextDay()" class="ml-3">Dia siguiente</button>
+    </span>
+  </div>
+
+  <h2 class="px-3 pt-3">Movimientos {{date | date:'EEEE'}} {{date | date}}</h2>
 
   <div class="table-container px-0 px-md-3">
 
-    <table mat-table *ngIf="movements && movements.length" [dataSource]="movements" class="mat-elevation-z8 mt-3 mb-4">
+    <table mat-table *ngIf="movements && movements.length; else emptyMessage" [dataSource]="movements" class="mat-elevation-z8 mt-3 mb-4">
 
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef>Fecha</th>
         <td mat-cell *matCellDef="let movement">{{movement.date | date}}</td>
       </ng-container>
 
-      <ng-container matColumnDef="reason">
+      <ng-container matColumnDef="reason" sticky>
         <th mat-header-cell *matHeaderCellDef>Motivo</th>
         <td mat-cell *matCellDef="let movement"> {{movement.reason}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="reference" sticky>
+      <ng-container matColumnDef="order">
+        <th mat-header-cell *matHeaderCellDef>Pedido</th>
+        <td mat-cell *matCellDef="let movement"> {{movement.idOrder}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="reference">
         <th mat-header-cell *matHeaderCellDef> Referencia </th>
         <td mat-cell *matCellDef="let movement"> {{movement.product?.reference}} </td>
       </ng-container>
@@ -47,3 +61,7 @@
 
   </div>
 </div>
+
+<ng-template #emptyMessage>
+  <div class="mt-5">No hay movimientos</div>
+</ng-template>
