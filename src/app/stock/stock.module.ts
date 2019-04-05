@@ -12,6 +12,7 @@ import { MatButtonModule,
          MatInputModule,
          MatFormFieldModule,
          MatListModule,
+         MatPaginatorModule,
          MatSidenavModule,
          MatTableModule } from '@angular/material';
 
@@ -22,6 +23,7 @@ import { StockTableVariationComponent } from './stock-table-variation/stock-tabl
 import { StockIncrementSummaryComponent } from './stock-increment-summary/stock-increment-summary.component';
 import { SummaryConfirmationComponent } from './stock-increment-summary-confirmation/summary-confirmation.component';
 import { HistoryComponent } from './history/history/history.component';
+import { StockProductComponent } from './stock-product/stock-product.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { HistoryComponent } from './history/history/history.component';
     StockTableVariationComponent,
     StockIncrementSummaryComponent,
     SummaryConfirmationComponent,
-    HistoryComponent
+    HistoryComponent,
+    StockProductComponent
   ],
   providers: [StockService],
   imports: [
@@ -45,6 +48,7 @@ import { HistoryComponent } from './history/history/history.component';
     MatInputModule,
     MatFormFieldModule,
     MatListModule,
+    MatPaginatorModule,
     MatSidenavModule,
     MatTableModule
   ],

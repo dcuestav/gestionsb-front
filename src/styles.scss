@@ -28,6 +28,9 @@ table {
 .font-100 {
     font-size: 1rem !important;
 }
+.clickable {
+    cursor: pointer;
+}
 
 @media print
 {    
@@ -44,9 +47,22 @@ table {
 
 .stock-variation-buttons.mat-button-toggle-group {
     border-width: 0 !important;
+    vertical-align: middle;
     .mat-button-toggle-label-content {
         line-height: 45px;
         padding: 0 !important;
         width: 32px;
+    }
+}
+
+// Problema celdas sticky sin borde en Firefox
+@-moz-document url-prefix() {
+    .mat-table-sticky:after {
+        content:'';
+        position:absolute;
+        left: 0;
+        bottom: -1px;
+        width:100%;
+        border-bottom: 1px solid rgba(0,0,0,.12);
     }
 }

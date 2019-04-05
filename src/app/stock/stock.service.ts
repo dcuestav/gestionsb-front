@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 import { DatePipe } from '@angular/common';
 import { IStockMovement } from './model/interfaces/stock-movement.interface';
 import { map } from 'rxjs/operators';
+import { IPage } from '../model/interfaces/page.interface';
 
 @Injectable()
 export class StockService {
@@ -54,6 +55,25 @@ export class StockService {
     const url = `${this.stockMovementsUrl}/date/${dateString}`;
 
     return this.http.get<IStockMovement[]>(url).pipe(map( mvtDTOs => mvtDTOs.map( mvtDTO => new StockMovement(mvtDTO) )));
+  }
+
+  getMovementsByProduct(stockId: string, page?: number, size?: number): Observable<IPage<StockMovement>> {
+    let url = `${this.stockMovementsUrl}/product/${stockId}`;
+    if (page >= 0 && size) {
+      url += `/?page=${page}&size=${size}`;
+    }
+
+    return this.http.get<IPage<IStockMovement>>(url).pipe(map( pageDTO => ({
+        page: pageDTO.page,
+        size: pageDTO.size,
+        totalElements: pageDTO.totalElements,
+        elements: pageDTO.elements.map(mvtDTO => new StockMovement(mvtDTO))
+      })
+    ));
+  }
+
+  getStockProduct(stockId: string): Observable<IProduct> {
+    return this.productService.getStockProducts([stockId]).pipe(map( products => (products.length > 0) ? products[0] : null));
   }
 
   handleError(error: HttpErrorResponse) {
