@@ -38,13 +38,12 @@ export class QuotesComponent implements OnInit {
     this.spinner.show();
     this.service.getQuotes(page, size)
       .subscribe( pageResults => {
-        this.spinner.hide();
         this.quotes = pageResults.elements.map( quoteDTO => new Quote(quoteDTO));
         this.pageSize = pageResults.size;
         this.pageNumber = pageResults.page;
         this.totalElements = pageResults.totalElements;
-
-      }, error => { this.spinner.hide(); } );
+        this.spinner.hide();
+      }, () => this.spinner.hide() );
   }
 
   public goToQuoteDetail(quote: Quote) {
@@ -68,12 +67,15 @@ export class QuotesComponent implements OnInit {
   }
 
   public quoteStateChange(quote: Quote, newStateValue: string) {
+    this.spinner.show();
     this.service.updateQuoteState(quote.id, newStateValue).subscribe( () => {
+      this.spinner.hide();
       quote.state = QuoteState[newStateValue];
-    }, error => {} );
+    }, () => this.spinner.hide() );
   }
 
   public clone(quote: Quote) {
+    this.spinner.show();
     this.service.cloneQuote(quote.id).then( () => {
       this.pageNumber = 0;
       this.getQuotes(this.pageNumber, this.pageSize);

@@ -74,7 +74,8 @@ export class QuoteEditComponent implements OnInit {
     this.service.getAllProducts().subscribe( products => {
       const sortedProducts = _.sortBy(products, ['name', 'color', 'reference']);
       this.products = sortedProducts;
-    });
+      this.spinner.hide();
+    }, () => this.spinner.hide() );
 
   }
 
