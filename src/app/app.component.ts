@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   showStock = false;
   showQuotes = false;
 
-  spinner: Observable<boolean>;
+  spinner$: Observable<boolean>;
 
   constructor(private tokenStorage: TokenStorageService,
               private responsiveService: ResponsiveService,
@@ -37,7 +37,7 @@ export class AppComponent implements OnInit {
         this.snackBar.open(message);
       });
 
-      this.spinner = this.spinnerService.getSpinnerObs();
+      this.spinner$ = this.spinnerService.getSpinnerObs();
   }
 
   ngOnInit() {
