@@ -1,9 +1,11 @@
+import { SpinnerService } from './service/spinner.service';
 import { NotificationService } from 'src/app/service/notification.service';
 import { Component, OnInit } from '@angular/core';
 import { ResponsiveService } from './service/responsive.service';
 import { MatSnackBar } from '@angular/material';
 import { TokenStorageService } from './auth/token-storage.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -21,9 +23,12 @@ export class AppComponent implements OnInit {
   showStock = false;
   showQuotes = false;
 
+  spinner: Observable<boolean>;
+
   constructor(private tokenStorage: TokenStorageService,
               private responsiveService: ResponsiveService,
               private errorService: NotificationService,
+              private spinnerService: SpinnerService,
               private router: Router,
               private snackBar: MatSnackBar
     ) {
@@ -31,6 +36,8 @@ export class AppComponent implements OnInit {
       this.errorService.notification.subscribe( message => {
         this.snackBar.open(message);
       });
+
+      this.spinner = this.spinnerService.getSpinnerObs();
   }
 
   ngOnInit() {

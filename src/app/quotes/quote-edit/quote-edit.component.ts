@@ -128,7 +128,6 @@ export class QuoteEditComponent implements OnInit {
       this.service.saveQuote(quoteToSave).subscribe( () => {
         accept();
       }, error => {
-        this.service.handleError(error);
         reject();
       });
     });

@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { IQuote } from '../model/interfaces/quote.interface';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IPage } from '../model/interfaces/page.interface';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { Quote } from '../model/quote.model';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
 import { NotificationService } from '../service/notification.service';
 import { ProductService } from '../service/product.service';
 import { IProduct } from '../model/interfaces/product.interface';
@@ -25,7 +25,8 @@ export class QuotesService {
 
     const url = `${this.quotesUrl}/?page=${page}&size=${size}`;
 
-    return this.http.get<IPage<IQuote>>(url);
+    return this.http.get<IPage<IQuote>>(url)
+     .pipe(catchError(err => this.handleError(err)));
   }
 
   public getQuoteById(id: string): Observable<Quote> {
@@ -33,12 +34,9 @@ export class QuotesService {
     const url = `${this.quotesUrl}/${id}`;
 
     return this.http.get<IQuote>(url).pipe(
+      catchError(err => this.handleError(err)),
       map(quoteDto => new Quote(quoteDto))
     );
-  }
-
-  public handleError(error: HttpErrorResponse) {
-    this.errorService.showError(error);
   }
 
   public showError(error: string) {
@@ -53,15 +51,18 @@ export class QuotesService {
 
     const url = `${this.quotesUrl}/${quoteId}/state`;
 
-    return this.http.put<any>(url, newStateKey);
+    return this.http.put<any>(url, newStateKey)
+      .pipe(catchError(err => this.handleError(err)));
   }
 
   public saveQuote(quote: Quote) {
 
     if (quote.id) {
-      return this.http.put<any>(this.quotesUrl, quote);
+      return this.http.put<any>(this.quotesUrl, quote)
+        .pipe(catchError(err => this.handleError(err)));
     } else {
-      return this.http.post<any>(this.quotesUrl, quote);
+      return this.http.post<any>(this.quotesUrl, quote)
+        .pipe(catchError(err => this.handleError(err)));
     }
   }
 
@@ -77,6 +78,11 @@ export class QuotesService {
         }, error => { reject(); });
       }, error => { reject(); });
     });
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    this.errorService.showError(error);
+    return throwError(error);
   }
 
 }

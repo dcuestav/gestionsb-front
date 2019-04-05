@@ -4,6 +4,7 @@ import { QuotesService } from './../quotes.service';
 import { Component, OnInit } from '@angular/core';
 import { PageEvent } from '@angular/material';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SpinnerService } from 'src/app/service/spinner.service';
 
 @Component({
   selector: 'app-quotes',
@@ -21,6 +22,7 @@ export class QuotesComponent implements OnInit {
   public totalElements: number;
 
   constructor(private service: QuotesService,
+              private spinner: SpinnerService,
               private router: Router,
               private route: ActivatedRoute) { }
 
@@ -33,15 +35,16 @@ export class QuotesComponent implements OnInit {
   }
 
   private getQuotes(page: number, size: number) {
-
+    this.spinner.show();
     this.service.getQuotes(page, size)
       .subscribe( pageResults => {
+        this.spinner.hide();
         this.quotes = pageResults.elements.map( quoteDTO => new Quote(quoteDTO));
         this.pageSize = pageResults.size;
         this.pageNumber = pageResults.page;
         this.totalElements = pageResults.totalElements;
 
-      }, error => this.service.handleError(error) );
+      }, error => { this.spinner.hide(); } );
   }
 
   public goToQuoteDetail(quote: Quote) {
@@ -67,7 +70,7 @@ export class QuotesComponent implements OnInit {
   public quoteStateChange(quote: Quote, newStateValue: string) {
     this.service.updateQuoteState(quote.id, newStateValue).subscribe( () => {
       quote.state = QuoteState[newStateValue];
-    }, error => this.service.handleError(error) );
+    }, error => {} );
   }
 
   public clone(quote: Quote) {

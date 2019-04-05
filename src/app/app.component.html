@@ -18,6 +18,9 @@
     </mat-toolbar>
 
     <div class="section-container">
+        <div *ngIf="spinner | async" class="spinner-background">
+            <mat-spinner *ngIf="spinner" class="spinner"></mat-spinner>
+        </div>
         <router-outlet></router-outlet>
     </div>
 </div>

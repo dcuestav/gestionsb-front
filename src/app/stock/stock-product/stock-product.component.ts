@@ -51,7 +51,7 @@ export class StockProductComponent implements OnInit {
       this.pageSize = pageResults.size;
       this.pageNumber = pageResults.page;
       this.totalElements = pageResults.totalElements;
-    }, error => this.service.handleError(error));
+    }, error => {});
   }
 
 }

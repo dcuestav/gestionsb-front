@@ -13,3 +13,20 @@
     overflow-y: auto;
     max-height: 100%;
 }
+
+.spinner-background {
+    position: absolute;
+    bottom: 0;
+    z-index: 100;
+    background-color: rgba(255, 255, 255, .15);
+    width: 100%;
+    height: calc(100% - 65px);
+    text-align: center;
+    vertical-align: middle;
+}
+
+.spinner {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+}

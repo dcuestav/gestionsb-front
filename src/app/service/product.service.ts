@@ -1,10 +1,12 @@
 import { Category } from './../model/category';
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { IProduct } from '../model/interfaces/product.interface';
-import { Observable } from 'rxjs';
+import { Observable, throwError  } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { StockVariation } from '../stock/model/stock-variation';
+import { catchError} from 'rxjs/operators';
+import { NotificationService } from './notification.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +15,8 @@ export class ProductService {
 
   private productsUrl = `${environment.apiServer}/products`;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+              private errorService: NotificationService) { }
 
   async getCategories(): Promise<Category[]> {
 
@@ -37,28 +40,37 @@ export class ProductService {
 
   getAllProducts(): Observable<IProduct[]> {
 
-    return this.http.get<IProduct[]>(this.productsUrl);
+    return this.http.get<IProduct[]>(this.productsUrl)
+      .pipe(catchError(err => this.handleError(err)));
   }
 
   getProductsOfCategory(selectedCategory: Category): Observable<IProduct[]> {
 
     const url = `${this.productsUrl}/${selectedCategory.id}`;
 
-    return this.http.get<IProduct[]>(url);
+    return this.http.get<IProduct[]>(url)
+      .pipe(catchError(err => this.handleError(err)));
   }
 
   getStockProducts(stockIds: any[]): Observable<IProduct[]> {
 
     const url = `${this.productsUrl}/stock`;
 
-    return this.http.post<IProduct[]>(url, stockIds);
+    return this.http.post<IProduct[]>(url, stockIds)
+      .pipe(catchError(err => this.handleError(err)));
   }
 
   updateStocks(stockVariation: StockVariation) {
 
     const url = `${this.productsUrl}/stock`;
 
-    return this.http.put<void>(url, stockVariation);
+    return this.http.put<void>(url, stockVariation)
+      .pipe(catchError(err => this.handleError(err)));
+  }
+
+  private handleError(error: HttpErrorResponse) {
+    this.errorService.showError(error);
+    return throwError(error);
   }
 
 }

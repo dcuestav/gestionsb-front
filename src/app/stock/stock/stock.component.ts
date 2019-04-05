@@ -4,6 +4,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Category } from 'src/app/model/category';
 import { MatSidenav } from '@angular/material/sidenav';
 import { IProduct } from 'src/app/model/interfaces/product.interface';
+import { SpinnerService } from 'src/app/service/spinner.service';
 
 @Component({
   selector: 'app-stock',
@@ -26,6 +27,7 @@ export class StockComponent implements OnInit {
   }
 
   constructor(private stockService: StockService,
+              private spinner: SpinnerService,
               private responsiveService: ResponsiveService) { }
 
   public isMobile() {
@@ -58,9 +60,13 @@ export class StockComponent implements OnInit {
   }
 
   private loadProductsFromSelectedCategory() {
+    this.spinner.show();
     this.stockService.getProductsOfCategory(this.selectedCategory)
-    .subscribe( products => { this.products = products; },
-                error => this.stockService.handleError(error) );
+    .subscribe( products => {
+      this.spinner.hide();
+      this.products = products;
+    },
+    error => { this.spinner.hide(); } );
   }
 
   public showHideMenu() {

@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { StockService } from '../../stock.service';
 import { StockMovement } from '../../model/stock-movement';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
+import { SpinnerService } from 'src/app/service/spinner.service';
 
 @Component({
   selector: 'app-history',
@@ -15,7 +16,7 @@ export class HistoryComponent implements OnInit {
   date: Date;
 
   constructor(private stockService: StockService,
-              private router: Router,
+              private spinner: SpinnerService,
               private route: ActivatedRoute
     ) { }
 
@@ -47,9 +48,11 @@ export class HistoryComponent implements OnInit {
   }
 
   private loadMovements() {
+    this.spinner.show();
     this.stockService.getMovementsByDate(this.date).subscribe( (movements) => {
+      this.spinner.hide();
       this.movements = movements;
-    } );
+    }, err => { this.spinner.hide(); } );
   }
 
 }
