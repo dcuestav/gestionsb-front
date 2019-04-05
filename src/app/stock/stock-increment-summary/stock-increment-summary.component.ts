@@ -1,3 +1,4 @@
+import { SpinnerService } from './../../service/spinner.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { StockService } from '../stock.service';
@@ -28,6 +29,7 @@ export class StockIncrementSummaryComponent implements OnInit {
 
   constructor(private stockService: StockService,
               private notificationService: NotificationService,
+              private spinner: SpinnerService,
               private route: ActivatedRoute,
               private router: Router,
               public dialog: MatDialog) {
@@ -35,9 +37,11 @@ export class StockIncrementSummaryComponent implements OnInit {
 
   ngOnInit() {
 
+    this.spinner.show();
     this.stockService.getProductWithIncrements().subscribe( products => {
+      this.spinner.hide();
       this.products = products;
-    });
+    }, () => this.spinner.hide() );
 
     this.confirmSave.subscribe( reason => {
       this.saveAndGoBack(reason);
@@ -45,11 +49,13 @@ export class StockIncrementSummaryComponent implements OnInit {
   }
 
   private saveAndGoBack(reason: string) {
+    this.spinner.show();
     this.stockService.saveStockIncrements(reason).subscribe( () => {
+      this.spinner.hide();
       this.increments.clear();
       this.notificationService.showInfo('Stock actualizado correctamente');
       this.router.navigate(['../'], { relativeTo: this.route });
-    });
+    }, () => this.spinner.hide() );
   }
 
   openConfirmationDialog(): void {

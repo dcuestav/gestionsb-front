@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { StockService } from '../stock.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { StockMovement } from '../model/stock-movement';
 import { IProduct } from 'src/app/model/interfaces/product.interface';
 import { PageEvent } from '@angular/material';
+import { SpinnerService } from 'src/app/service/spinner.service';
 
 @Component({
   selector: 'app-stock-product',
@@ -24,7 +25,7 @@ export class StockProductComponent implements OnInit {
   totalElements: number;
 
   constructor(private route: ActivatedRoute,
-              private router: Router,
+              private spinner: SpinnerService,
               private service: StockService) { }
 
   ngOnInit() {
@@ -35,9 +36,7 @@ export class StockProductComponent implements OnInit {
       }
       this.stockId = stockId;
       this.getMovementsPage(this.pageSize, this.pageNumber);
-      this.service.getStockProduct(stockId).subscribe( product => {
-        this.product = product;
-      });
+      this.loadProduct(stockId);
     });
   }
 
@@ -45,13 +44,23 @@ export class StockProductComponent implements OnInit {
     this.getMovementsPage(pageEvent.pageIndex, pageEvent.pageSize);
   }
 
+  private loadProduct(stockId: string) {
+    this.spinner.show();
+    this.service.getStockProduct(stockId).subscribe( product => {
+      this.spinner.hide();
+      this.product = product;
+    }, () => this.spinner.hide());
+  }
+
   private getMovementsPage(page?: number, size?: number) {
+    this.spinner.show();
     this.service.getMovementsByProduct(this.stockId, page, size).subscribe( pageResults => {
+      this.spinner.hide();
       this.movements = pageResults.elements;
       this.pageSize = pageResults.size;
       this.pageNumber = pageResults.page;
       this.totalElements = pageResults.totalElements;
-    }, error => {});
+    }, () => this.spinner.hide());
   }
 
 }

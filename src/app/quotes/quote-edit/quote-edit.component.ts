@@ -9,6 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import * as _ from 'lodash';
 import { QuoteLine } from 'src/app/model/quote-line';
 import { map } from 'rxjs/operators';
+import { SpinnerService } from 'src/app/service/spinner.service';
 
 @Component({
   selector: 'app-quote-edit',
@@ -46,9 +47,12 @@ export class QuoteEditComponent implements OnInit {
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private service: QuotesService) { }
+              private service: QuotesService,
+              private spinner: SpinnerService) { }
 
   ngOnInit() {
+
+    this.spinner.show();
 
     this.route.paramMap.subscribe( params => {
       const quoteId = params.get('id');
@@ -57,7 +61,8 @@ export class QuoteEditComponent implements OnInit {
       }
       this.service.getQuoteById(quoteId).subscribe( quote => {
         this.quote$.next(quote);
-      });
+        this.spinner.hide();
+      }, () => this.spinner.hide() );
     });
 
     this.quote$.subscribe( quote => {
@@ -110,7 +115,10 @@ export class QuoteEditComponent implements OnInit {
   }
 
   public saveAndGoBack() {
+    this.spinner.show();
     this.save().then( () => {
+      this.spinner.hide();
+      this.service.showInfo('Presupuesto guardado');
       this.goBack();
     });
   }

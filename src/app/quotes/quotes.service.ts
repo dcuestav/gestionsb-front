@@ -40,7 +40,11 @@ export class QuotesService {
   }
 
   public showError(error: string) {
-    this.errorService.notification.next(error);
+    this.showInfo(error);
+  }
+
+  public showInfo(info: string) {
+    this.errorService.notification.next(info);
   }
 
   public getAllProducts(): Observable<IProduct[]> {
